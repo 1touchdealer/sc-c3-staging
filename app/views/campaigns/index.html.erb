@@ -1,0 +1,207 @@
+<!-- begin Content -->
+<section id="campaign-index" class="section-home" style="min-height:95vh; background: #a3cbdb;">
+  <div class="container show-container">
+    <h2 class="show-title" style="color:white; padding-bottom:20px">Fundraisers</h2>
+    	<article class="donations">
+      <div class="col-md-4 col-lg-3" style="padding:10px; background:white; border-radius: 5px; margin-bottom: 10px;">
+        <%= form_tag campaigns_path, :method => 'get' do %>
+          <div class="input-group" style="width:100%">
+            <%= text_field_tag :search, nil, class: "form-control", placeholder: "Search for..." %>
+            <%= submit_tag "Search", name: nil, style: "border:0; padding:0; font-size:0" %>
+          </div>
+        <% end %>
+
+        <div class="row" style="margin:0; margin-top:10px;">
+          <a href="#campaign_category_search" style="color: #26344b; font-size: 18px; text-transform:uppercase; margin: 20px 0 10px 0;" data-toggle="collapse">
+            <i class="icon-plus"></i>
+            Categories
+          </a>
+        </div>
+        <ul id="campaign_category_search" class="categories collapse">
+          <% CampaignCategory.all.each do |category| %>
+            <li>
+              <%= link_to campaigns_path(request.query_parameters.merge({:category_search => category.id}).except(:search, :region_search)) do %>
+                <i class="icon-plus"></i><%= category.name %><span class="pull-right"></span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+
+        <div class="row" style="margin:0;">
+          <a href="#campaign_region_search" style="color: #26344b; font-size: 18px; text-transform:uppercase; margin: 20px 0 10px 0;" data-toggle="collapse">
+            <i class="icon-plus"></i>
+            Regions
+          </a>
+        </div>
+        <ul id="campaign_region_search" class="categories collapse">
+          <% Region.all.each do |region| %>
+            <li>
+              <%= link_to campaigns_path(request.query_parameters.merge({:region_search => region.id}).except(:search, :category_search)) do %>
+                <i class="icon-plus"></i><%= region.name %><span class="pull-right"></span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+    	<div class="col-md-8 col-lg-9" style="margin-bottom: 20px;">
+    		<div class="row">
+          <%- if @campaigns.present? %>
+            <% @campaigns.each do |campaign| %>
+          		<div class="col-lg-4 col-sm-6">
+                <%= link_to campaign, class: "donation-item", style: "text-decoration: none" do %>
+                  <figure>
+                    <%- if campaign.image?%>
+                      <%= image_tag campaign.image.url, class:"landing-page-campaign-image"%>
+                    <% else %>
+                      <img src="//placehold.it/400x300" class="landing-page-campaign-image">
+                    <% end %>
+          				</figure>
+          				<div class="content landing-page-campaign-content">
+          					<h4><%= campaign.name %></h4>
+          					<p><%= campaign.description %></p>
+          				</div>
+          				<div class="foot">
+          					<span class="goal">Goal: <%= number_to_currency(campaign.goal_amount, precision: 0) %></span>
+          					<span class="grossed">Grossed</span>
+          					<div class="progress">
+          						<div class="progress-bar" title="" role="progressbar" style="width: <%= campaign.percent_complete  %>%;"><span class="sr-only"></span></div>
+          					</div>
+                    <div class="row landing-page-campaign-footer">
+                      <div class="col-xs-6 text-center" style="padding-right:0">
+                        <i class="icon-user"></i><%= campaign.total_donations %>
+                      </div>
+                      <div class="col-xs-6 text-center" style="padding-left:0">
+                        <i class="icon-clock" style=""></i><%= campaign.age_in_words %>
+                      </div>
+                    </div>
+          				</div>
+          			<% end %>
+          		</div>
+            <% end %>
+          <% else %>
+              <div class="col-xs-8 col-xs-offset-2 text-center" style="background: white; padding: 20px; margin-top:5vh; border-radius:5px">
+                <h3 style="font-family: 'Lato'; font-weight:300; text-transform:uppercase; margin-top: 20px; text-align:center">No Fundraisers Found</h3>
+                <%= link_to 'Reset Search Results', campaigns_path, class: "btn btn-dark" %>
+          		</div>
+          <% end %>
+    		<!-- <div class="col-lg-4 col-sm-6">
+    			<a href="donations_single.html" class="donation-item">
+    				<figure><img src="//placehold.it/400x300"></figure>
+    				<div class="content">
+    					<h4>My Artic Sunrice</h4>
+    					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto, in molestiae ex...</p>
+    				</div>
+    				<div class="foot">
+    					<span class="goal">Goal: $4,548</span>
+    					<span class="grossed">Grossed</span>
+    					<div class="progress">
+    						<div class="progress-bar" title="" role="progressbar" style="width: 60%;" data-original-title="$2.200"><span class="sr-only">60% Complete</span></div>
+    					</div>
+    					<span class="views"><i class="icon-eye"></i>957</span>
+    					<span class="people"><i class="icon-user"></i>432</span>
+    					<span class="time"><i class="icon-clock"></i>2 min</span>
+    				</div>
+    			</a>
+    		</div>
+    		<div class="col-lg-4 col-sm-6">
+    			<a href="donations_single.html" class="donation-item">
+    				<figure><img src="//placehold.it/400x300"></figure>
+    				<div class="content">
+    					<h4>My Artic Sunrice</h4>
+    					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto, in molestiae ex...</p>
+    				</div>
+    				<div class="foot">
+    					<span class="goal">Goal: $4,548</span>
+    					<span class="grossed">Grossed</span>
+    					<div class="progress">
+    						<div class="progress-bar" title="" role="progressbar" style="width: 80%;" data-original-title="$2.200"><span class="sr-only">80% Complete</span></div>
+    					</div>
+    					<span class="views"><i class="icon-eye"></i>957</span>
+    					<span class="people"><i class="icon-user"></i>432</span>
+    					<span class="time"><i class="icon-clock"></i>2 min</span>
+    				</div>
+    			</a>
+    		</div>
+    		<div class="col-lg-4 col-sm-6">
+    			<a href="donations_single.html" class="donation-item">
+    				<figure><img src="//placehold.it/400x300"></figure>
+    				<div class="content">
+    					<h4>My Artic Sunrice</h4>
+    					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto, in molestiae ex...</p>
+    				</div>
+    				<div class="foot">
+    					<span class="goal">Goal: $4,548</span>
+    					<span class="grossed">Grossed</span>
+    					<div class="progress">
+    						<div class="progress-bar" title="" role="progressbar" style="width: 15%;" data-original-title="$2.200"><span class="sr-only">15% Complete</span></div>
+    					</div>
+    					<span class="views"><i class="icon-eye"></i>957</span>
+    					<span class="people"><i class="icon-user"></i>432</span>
+    					<span class="time"><i class="icon-clock"></i>2 min</span>
+    				</div>
+    			</a>
+    		</div>
+
+    		<div class="col-lg-4 col-sm-6">
+    			<a href="donations_single.html" class="donation-item">
+    				<figure><img src="//placehold.it/400x300"></figure>
+    				<div class="content">
+    					<h4>My Artic Sunrice</h4>
+    					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto, in molestiae ex...</p>
+    				</div>
+    				<div class="foot">
+    					<span class="goal">Goal: $4,548</span>
+    					<span class="grossed">Grossed</span>
+    					<div class="progress">
+    						<div class="progress-bar" title="" role="progressbar" style="width: 90%;" data-original-title="$2.200"><span class="sr-only">90% Complete</span></div>
+    					</div>
+    					<span class="views"><i class="icon-eye"></i>957</span>
+    					<span class="people"><i class="icon-user"></i>432</span>
+    					<span class="time"><i class="icon-clock"></i>2 min</span>
+    				</div>
+    			</a>
+    		</div>
+    		<div class="col-lg-4 col-sm-6">
+    			<a href="donations_single.html" class="donation-item">
+    				<figure><img src="//placehold.it/400x300"></figure>
+    				<div class="content">
+    					<h4>My Artic Sunrice</h4>
+    					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto, in molestiae ex...</p>
+    				</div>
+    				<div class="foot">
+    					<span class="goal">Goal: $4,548</span>
+    					<span class="grossed">Grossed</span>
+    					<div class="progress">
+    						<div class="progress-bar" title="" role="progressbar" style="width: 60%;" data-original-title="$2.200"><span class="sr-only">60% Complete</span></div>
+    					</div>
+    					<span class="views"><i class="icon-eye"></i>957</span>
+    					<span class="people"><i class="icon-user"></i>432</span>
+    					<span class="time"><i class="icon-clock"></i>2 min</span>
+    				</div>
+    			</a>
+    		</div>
+    		<div class="col-lg-4 col-sm-6">
+    			<a href="donations_single.html" class="donation-item">
+    				<figure><img src="//placehold.it/400x300"></figure>
+    				<div class="content">
+    					<h4>My Artic Sunrice</h4>
+    					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto, in molestiae ex...</p>
+    				</div>
+    				<div class="foot">
+    					<span class="goal">Goal: $4,548</span>
+    					<span class="grossed">Grossed</span>
+    					<div class="progress">
+    						<div class="progress-bar" title="" role="progressbar" style="width: 80%;" data-original-title="$2.200"><span class="sr-only">80% Complete</span></div>
+    					</div>
+    					<span class="views"><i class="icon-eye"></i>957</span>
+    					<span class="people"><i class="icon-user"></i>432</span>
+    					<span class="time"><i class="icon-clock"></i>2 min</span>
+    				</div>
+    			</a>
+        </div> -->
+    		</div>
+    	</div>
+    </div>
+	</article>
+</section>

@@ -1,0 +1,69 @@
+<div class="col-xs-12 col-sm-6 chop">
+  <!-- BEGIN BORDERED TABLE PORTLET-->
+  <div class="portlet light portlet-fit">
+    <div class="portlet-title">
+      <div class="caption">
+        <span class="caption-subject sbold uppercase">Your Membership</span>
+      </div>
+    </div>
+    <div class="portlet-body">
+      <div class="form-group form-md-line-input text-center" style="padding-top:0">
+        <p style="margin-bottom:0; color: #52BEEF;text-align:left">Logo</p>
+        <%- if @church.logo? %>
+          <%= image_tag @church.logo.url, style: "max-width:80%"%>
+        <% else %>
+          <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+        <% end %>
+      </div>
+      <div class="form-group form-md-line-input">
+          <div class="form-control form-control-static"> <%= @church.name %> </div>
+          <label for="form_control_1">Name</label>
+      </div>
+      <div class="form-group form-md-line-input">
+          <div class="form-control form-control-static"> <%= @church.contact_email %> </div>
+          <label for="form_control_1">Contact Email</label>
+      </div>
+      <div class="form-group form-md-line-input">
+          <div class="form-control form-control-static"><%= @church.region.try(:name) %></div>
+          <label for="form_control_1">Region</label>
+      </div>
+      <div class="form-group form-md-line-input">
+          <div class="form-control form-control-static"> <%= current_user.expiration.strftime("%m/%d/%Y") rescue '' %> </div>
+          <label for="form_control_1">Membership Expiration</label>
+      </div>
+      <div class="form-group form-md-line-input">
+        <div class="form-control form-control-static">
+          <ul style="padding-left:20px">
+            <li><%= @church.church_category.try(:name) %></li>
+          </ul>
+        </div>
+        <label for="form_control_1">Categories</label>
+      </div>
+      <div class="row text-center"  style="padding-top:10px">
+        <%= link_to 'Edit Account', edit_user_path(current_user), class:"btn btn-small active btn-blue", style:"width:100%;"%>
+      </div>
+      <div class="row text-center"  style="padding-top:10px">
+        <%= link_to 'Edit Church', edit_church_path(@church), class:"btn btn-small active btn-blue", style:"width:100%;"%>
+      </div>
+      <%if current_user.subscriptions.present?%>
+        <div class="row text-center"  style="padding-top:10px">
+          <%= link_to 'Cancel Membership', cancel_subscription_path, class:"btn btn-small active btn-blue", style:"width:100%;"%>
+        </div>
+      <%else%>
+        <div class="row text-center" style="padding-top:10px">
+          <%= link_to 'Renew Membership', new_payment_path, class:"btn btn-small active btn-blue", style:"width:100%;"%>
+        </div>
+      <%end%>
+      <%if @card.present?%>
+        <div class="row text-center"  style="padding-top:10px">
+          <%= link_to 'Update Credit Card', edit_card_path(@card), class:"btn btn-small active btn-blue", style:"width:100%;"%>
+        </div>
+      <%else%>
+        <div class="row text-center"  style="padding-top:10px">
+          <%= link_to 'Add Credit Card', new_card_path, class:"btn btn-small active btn-blue", style:"width:100%;"%>
+        </div>
+      <%end%>
+    </div>
+    <!-- END BORDERED TABLE PORTLET-->
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="table_tools">
+  <div class="batch_actions_selector dropdown_menu">
+    <%= select_tag :days, options_for_select([["7 Days",7],["14 Days",14],["30 Days",30]]), prompt: "Days", class: "form-control"%>
+  </div>
+</div>
+
+<div id="upcoming_due_members">
+  <%= render partial: 'users' %>
+</div>
+
+<script type="text/javascript">
+  $(document).on("change","#days", function (){
+    var day = $('#days').val();
+    $.ajax({
+      type: 'GET',
+      url: "/admin/membership_renewals",
+      data : {day: day}
+    });
+  });
+</script>

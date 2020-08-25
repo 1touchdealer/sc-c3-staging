@@ -1,0 +1,87 @@
+<div class="top-content">
+  <div class="container" style="background: #a3cbdb; min-height:95vh; padding-top:90px;">
+    <p class="step-form-title">Enter your payment information</p> 
+    <div class="row">
+      <div class="col-md-12 col-lg-12 form-box" style="padding-bottom: 50px">
+        <%= form_tag cards_path, method: "post", class: "f1 card-form" do %>
+          <div class="col-md-6">
+            <div class="form-group form-md-line-input form-md-floating-label">
+              <div class="input-icon right">
+                <%= text_field_tag :card_name, nil, class: "form-control"%>
+                <%= label_tag :name %>
+                <i class="fa fa-id-card-o"></i>
+              </div>
+            </div>
+            <div class="form-group form-md-line-input form-md-floating-label">
+              <div class="input-icon right">
+                <%= text_field_tag :address2, nil, class: "form-control"%>
+                <%= label_tag "Address Line 2" %>
+              </div>
+            </div>
+            <div class="form-group form-md-line-input form-md-floating-label">
+              <div class="input-icon right">
+                <%= text_field_tag :state, nil, class: "form-control"%>
+                <%= label_tag "State" %>
+              </div>
+            </div>
+            <div class="form-group form-md-line-input form-md-floating-label">
+              <div class="input-icon right">
+                <%= text_field_tag :country, nil, class: "form-control"%>
+                <%= label_tag "Country" %>
+              </div>
+            </div>
+            <div class="form-group form-md-line-input form-md-floating-label">
+              <div class="input-icon right">
+                <%= text_field_tag :card_code, nil, class: "form-control",:maxlength => 3, :required => true%>
+                <%= label_tag "Card Code" %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-md-line-input form-md-floating-label">
+              <div class="input-icon right">
+                <%= text_field_tag :address1, nil, class: "form-control"%>
+                <%= label_tag "Address Line 1" %>
+              </div>
+            </div>
+            <div class="form-group form-md-line-input form-md-floating-label">
+              <div class="input-icon right">
+                <%= text_field_tag :city, nil, class: "form-control"%>
+                <%= label_tag "City" %>
+              </div>
+            </div>
+            <div class="form-group form-md-line-input form-md-floating-label">
+              <div class="input-icon right">
+                <%= text_field_tag :zip, nil, class: "form-control"%>
+                <%= label_tag "Zip" %>
+              </div>
+            </div>
+            <div class="form-group form-md-line-input form-md-floating-label">
+              <div class="input-icon right">
+                <%= text_field_tag :card_number, nil, class: "form-control",:maxlength => 16, :required => true%>
+                <%= label_tag "Card Number" %>
+              </div>
+            </div>
+            <div class="form-group form-md-line-input dropdown-input-field">
+              <div class="row">
+                <div class="col-md-6">
+                  <%= select_month nil, {add_month_numbers_true: true}, {class: 'form-control', required: true}%>
+                </div>
+                <div class="col-md-6">
+                  <%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {class: 'form-control', required: true}%>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 btns-container"> 
+            <center>
+              <%=submit_tag "Save",:class => "btn btn-primary border-radius mr-10" %>
+              <%=link_to "Cancel",dashboard_path,:class => "btn btn-danger border-radius" %>
+            </center>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

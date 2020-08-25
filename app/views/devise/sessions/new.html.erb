@@ -1,0 +1,73 @@
+<div class="row" style="background: #a3cbdb; margin: 0 auto; min-height: 100vh;">
+  <div class="portlet light " id="form_wizard_1" style="width: 80%; margin: 0 auto; margin-top: 95px; border: 1px solid black; margin-bottom: 20px; background: rgba(256,256,256,.85);border-radius: 5px !important;">
+      <div class="portlet-body form">
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="form-body" style="padding-top:0">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="col-sm-5" style="text-align:center">
+                  <h2 style="font-family: 'Lato'; font-size: 38px; font-weight: 300;">Join</h2>
+
+                  <%= link_to new_user_registration_path, class: 'btn btn-dark', style: 'width: 100%; margin-top:12px; margin-bottom:0' do %>
+                    Individual <span style="font-weight:100; display:block">$49</span>
+                  <% end %>
+                  <%= link_to alliance_registration_path, class: 'btn btn-dark', style: 'width: 100%; margin-top:12px; margin-bottom:0' do %>
+                    Alliance <span style="font-weight:100; display:block">(Non-Profit) - $99</span>
+                  <% end %>
+                  <%= link_to business_registration_path, class: 'btn btn-dark', style: 'width: 100%; margin-top:12px; margin-bottom:0' do %>
+                    Business <span style="font-weight:100; display:block">(University) - $299</span>
+                  <% end %>
+                  <%= link_to church_registration_path, class: 'btn btn-dark', style: 'width: 100%; margin-top:12px; margin-bottom:0' do %>
+                    Church <span style="font-weight:100; display:block">$99</span>
+                  <% end %>
+
+                </div>
+                <div class="col-sm-1" style="padding-top:50px">
+                  <div class="row" style="height:100px; border-right:1px solid rgba(0,0,0,.15); margin-right:50%;">
+                  </div>
+                  <div class="row" style="text-align: center;margin: 20px auto;font-family: 'Lato'; font-size: 12px; text-transform: uppercase">
+                    or
+                  </div>
+                  <div class="row" style="height:100px; border-right:1px solid rgba(0,0,0,.15); margin-right:50%;">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <h2 class="text-center" style="font-family: 'Lato'; font-size: 38px; font-weight: 100;">Already a Member? <span style="font-variant: small-caps; font-weight:300"> login</span></h2>
+
+                  <div class="form-group form-md-line-input form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 32px;">
+                    <div class="input-icon right">
+                      <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+                      <%= f.label :email, for: 'form_control_1' %>
+                      <i class="fa fa-envelope-o"></i>
+                    </div>
+                  </div>
+                  <div class="form-group form-md-line-input  form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 32px;">
+                    <div class="input-icon right">
+                      <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+                      <%= f.label :password, for: 'form_control_1' %>
+                      <i class="fa fa-lock"></i>
+                    </div>
+                  </div>
+                  <div class="row" style="text-align:center">
+                    <%= f.submit "Login", class: 'btn btn-dark', style: 'width: 94%; margin-bottom: 10px;' %>
+                  </div>
+                  <div class="row" style="text-align:center">
+                    <%= link_to 'Forgot Password?', new_user_password_path(User), :class => "btn btn-link", :style => "font-family: 'Muli', 'Helvetica', 'Arial', 'sans-serif'; font-size: 12px; color: gray; text-decoration: none" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row text-center" style="margin-top:25px; font-size:18px; font-weight:400">
+              <%= link_to "Why Become A Member?","https://s3.amazonaws.com/sc-c3/pdfs/SCC3_WhyBeaMember.pdf", :target => "_blank"%>
+            </div>
+            <div class="row">
+              <p style="margin: 5px 10px 0 10px; text-align: center; font-size: 12px; font-weight: 200;">
+                If you need assistance or would like to provide feedback please contact
+                <a href="mailto:support@sc-c3.org?Subject=Registration%20Help" target="_top" style="font-weight:300">support</a>
+              </p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>

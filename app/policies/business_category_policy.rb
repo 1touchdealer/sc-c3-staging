@@ -1,0 +1,2 @@
+class BusinessCategoryPolicy < ApplicationPolicy
+end

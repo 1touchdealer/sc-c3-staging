@@ -1,0 +1,81 @@
+<!-- begin Content -->
+<section id="business-index" class="section-home" style="min-height:95vh; background: #a3cbdb;">
+  <div class="container show-container">
+    <h2 class="show-title" style="color:white; padding-bottom:20px">Business Members</h2>
+    	<article class="donations">
+      <div class="col-md-4 col-lg-3" style="padding:10px; background:white; border-radius: 5px; margin-bottom: 10px;">
+        <%= form_tag businesses_path, :method => 'get' do %>
+          <div class="input-group" style="width:100%">
+            <%= text_field_tag :search, nil, class: "form-control", placeholder: "Search for..." %>
+            <%= submit_tag "Search", name: nil, style: "border:0; padding:0; font-size:0" %>
+          </div>
+        <% end %>
+
+        <div class="row" style="margin:0; margin-top:10px;">
+          <a href="#business_category_search" style="color: #26344b; font-size: 18px; text-transform:uppercase; margin: 20px 0 10px 0;" data-toggle="collapse">
+            <i class="icon-plus"></i>
+            Categories
+          </a>
+        </div>
+
+        <ul id="business_category_search" class="categories collapse">
+          <% BusinessCategory.all.each do |category| %>
+            <li>
+              <%= link_to businesses_path(request.query_parameters.merge({:category_search => category.id}).except(:search, :region_search)) do %>
+                <i class="icon-plus"></i><%= category.name %><span class="pull-right"></span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+
+        <div class="row" style="margin:0;">
+           <a href="#business_region_search" style="color: #26344b; font-size: 18px; text-transform:uppercase; margin: 20px 0 10px 0;" data-toggle="collapse">
+             <i class="icon-plus"></i>
+             Regions
+           </a>
+         </div>
+
+         <ul id="business_region_search" class="categories collapse">
+          <% Region.all.each do |region| %>
+            <li>
+              <%= link_to businesses_path(request.query_parameters.merge({:region_search => region.id}).except(:search, :category_search)) do %>
+                <i class="icon-plus"></i><%= region.name %><span class="pull-right"></span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+    	<div class="col-md-8 col-lg-9" style="margin-bottom: 20px;">
+    		<div class="row">
+          <%- if @businesses.present? %>
+            <% @businesses.each do |business| %>
+          		<div class="col-lg-4 col-sm-6">
+                <%= link_to business, class: "donation-item", style: "text-decoration: none; border-radius: 8px;" do %>
+                  <figure>
+                    <%- if business.logo?%>
+                      <%= image_tag business.logo.url, class:"landing-page-campaign-image", style: "border-radius: 8px 8px 0 0;"%>
+                    <% else %>
+                      <img src="//placehold.it/400x300" class="landing-page-campaign-image" style="border-radius: 8px 8px 0 0;">
+                    <% end %>
+          				</figure>
+          				<div class="content landing-page-campaign-content" style="height: 150px; border-bottom:0">
+          					<h4><%= business.name %></h4>
+          					<p><%= business.description %></p>
+          				</div>
+                  <div class="foot" style="padding-bottom:0px">
+                  </div>
+          			<% end %>
+          		</div>
+            <% end %>
+          <% else %>
+              <div class="col-xs-8 col-xs-offset-2 text-center" style="background: white; padding: 20px; margin-top:5vh; border-radius:5px">
+                <h3 style="font-family: 'Lato'; font-weight:300; text-transform:uppercase; margin-top: 20px; text-align:center">No Businesses Found</h3>
+                <%= link_to 'Reset Search Results', businesses_path, class: "btn btn-dark" %>
+          		</div>
+          <% end %>
+    		</div>
+    	</div>
+    </div>
+	</article>
+</section>

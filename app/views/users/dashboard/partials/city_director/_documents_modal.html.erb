@@ -1,0 +1,28 @@
+<div id="cityDirectorDocumentsModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Documents</h4>
+      </div>
+      <div class="modal-body">
+        <div class="col-xs-12">
+          <table class="table js-document-table">
+            <tr class="active">
+              <th class="col-sm-8">Title</th>
+              <th>Document</th>
+              <th>Download</th>
+            </tr>
+            <% ToolBoxResource.city_director.document_exist.each do |data| %>
+              <tr>
+                <td><%= data.title %></td>
+                <td><%= data.document_file_name %></td>
+                <td><%= link_to 'Download', data.document.url, target: '_blank', class: 'btn btn-default' %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="col-sm-12 chop">
+  <!-- BEGIN BORDERED TABLE PORTLET-->
+  <div class="portlet light portlet-fit">
+    <div class="portlet-title">
+      <div class="caption">
+        <span class="caption-subject sbold uppercase">Events</span>
+      </div>
+    </div>
+    <div class="portlet-body">
+      <div class="table-scrollable table-scrollable-borderless" style="overflow: visible;">
+        <table class="table table-hover table-light">
+          <thead>
+          <tr class="uppercase">
+            <th>#</th>
+            <th class="text-center col-sm-1">Name</th>
+            <th class="text-center col-sm-5">Date</th>
+            <th class="text-center col-sm-3">Number of attendees</th>
+            <th class="text-center col-sm-3">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+            <% if events.any? %>
+              <% events[0..3].each_with_index do |event, index| %>
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td class="text-center"><%= event.name %></td>
+                  <td class="text-center">
+                    <%= event.start.strftime('%m/%d/%Y %l:%M%p') rescue '' %>
+                    <% if event.end %>
+                      &mdash; <%= event.end.strftime('%m/%d/%Y %l:%M%p') rescue '' %>
+                    <% end %>
+                  </td>
+                  <td class="text-center"><%= event.attendees.count %></td>
+                  <td class="text-center">
+                    <div class="actions text-left">
+                      <div class="btn-group">
+                        <%= link_to 'Download badges', event_download_badges_pdf_path(event, format: 'pdf'), class: 'btn dark btn-outline btn-circle btn-sm width150', target: '_blank' %>
+                      </div>
+                      <% if event.attendees.any? %>
+                        <div class="btn-group">
+                          <a role="button" class="btn dark btn-outline btn-circle btn-sm width150"
+                            data-toggle="modal" data-target="<%= "#event-#{event.id}" %>">
+                            View attendees
+                          </a>
+                        </div>
+                        <%= render 'users/dashboard/partials/city_director/attendees_modal', event: event %>
+                      <% end %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+              <%if (events.length > 4) %>
+                <tr>
+                  <td><button class="collapse-btn btn dark btn-outline btn-circle btn-sm" type="button" data-toggle="collapse" data-target=".events-list"><i class="icon-plus"></i></button></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              <%end%>
+              <% events.drop(4).each_with_index do |event, index| %>
+                <tr class="collapse events-list">
+                  <td><%= index + 5 %></td>
+                  <td class="text-center"><%= event.name %></td>
+                  <td class="text-center">
+                    <%= event.start.strftime('%m/%d/%Y %l:%M%p') rescue '' %>
+                    <% if event.end %>
+                      &mdash; <%= event.end.strftime('%m/%d/%Y %l:%M%p') rescue '' %>
+                    <% end %>
+                  </td>
+                  <td class="text-center"><%= event.attendees.count %></td>
+                  <td class="text-center">
+                    <div class="actions text-left">
+                      <div class="btn-group">
+                        <%= link_to 'Download badges', event_download_badges_pdf_path(event, format: 'pdf'), class: 'btn dark btn-outline btn-circle btn-sm width150', target: '_blank' %>
+                      </div>
+                      <% if event.attendees.any? %>
+                        <div class="btn-group">
+                          <a role="button" class="btn dark btn-outline btn-circle btn-sm width150"
+                            data-toggle="modal" data-target="<%= "#event-#{event.id}" %>">
+                            View attendees
+                          </a>
+                        </div>
+                        <%= render 'users/dashboard/partials/city_director/attendees_modal', event: event %>
+                      <% end %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            <% else %>
+              <tr class="text-center">
+                <td colspan="5">Sorry we could not find any Events for your region.</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- END BORDERED TABLE PORTLET-->
+</div>

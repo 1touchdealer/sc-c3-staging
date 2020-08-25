@@ -1,0 +1,77 @@
+<div class="col-sm-12 chop">
+  <!-- BEGIN BORDERED TABLE PORTLET-->
+  <div class="portlet light portlet-fit">
+    <div class="portlet-title">
+      <div class="caption">
+        <span class="caption-subject sbold uppercase"><%= title %></span>
+      </div>
+    </div>
+    <div class="portlet-body">
+      <div class="table-scrollable table-scrollable-borderless" style="overflow: visible;">
+        <table class="table table-hover table-light">
+          <thead>
+          <tr class="uppercase">
+            <th>#</th>
+            <th class="text-center col-sm-1">Name</th>
+            <th class="text-center col-sm-5">Contact Email</th>
+            <th class="text-center col-sm-3">Joined</th>
+            <th class="text-center col-sm-3">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+            <% if entities.any? %>
+              <% entities[0..3].each_with_index do |entity, index| %>
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td class="text-center"><%= entity.name %></td>
+                  <td class="text-center"><%= (title == 'Members') ? entity.email : entity.contact_email %></td>
+                  <td class="text-center"><%= time_ago_in_words entity.created_at %></td>
+                  <td class="text-center">
+                    <% if (title != 'Members')%>
+                      <div class="actions">
+                        <div class="btn-group">
+                          <%= link_to 'View', dashboard_path(user_id: entity.admin_users.first.try(:id)), class: 'btn dark btn-outline btn-circle btn-sm' %>
+                        </div>
+                      </div>
+                    <%end%>
+                  </td>
+                </tr>
+              <% end %>
+              <%if (entities.length > 4) %>
+                <tr>
+                  <td><button class="collapse-btn btn dark btn-outline btn-circle btn-sm" type="button" data-toggle="collapse" data-target=".<%=title%>-list"><i class="icon-plus"></i></button></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              <%end%>
+              <% entities.drop(4).each_with_index do |entity, index| %>
+                <tr class="collapse <%=title%>-list">
+                  <td><%= index + 5 %></td>
+                  <td class="text-center"><%= entity.name %></td>
+                  <td class="text-center"><%= (title == 'Members') ? entity.email : entity.contact_email %></td>
+                  <td class="text-center"><%= time_ago_in_words entity.created_at %></td>
+                  <td class="text-center">
+                    <% if (title != 'Members')%>
+                      <div class="actions">
+                        <div class="btn-group">
+                          <%= link_to 'View', dashboard_path(user_id: entity.admin_users.first.try(:id)), class: 'btn dark btn-outline btn-circle btn-sm' %>
+                        </div>
+                      </div>
+                    <%end%>
+                  </td>
+                </tr>
+              <% end %>
+            <% else %>
+              <tr class="text-center">
+                <td colspan="5">Sorry we could not find any <%= title %> for your region.</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- END BORDERED TABLE PORTLET-->
+</div>

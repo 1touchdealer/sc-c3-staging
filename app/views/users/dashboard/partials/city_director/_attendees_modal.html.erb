@@ -1,0 +1,56 @@
+<div class="modal fade attendees-sc-c3" id="<%= "event-#{event.id}" %>" tabindex="-1" role="dialog" aria-labelledby="<%= "event-#{event.id}-label" %>">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" id="<%= "print-#{event.id}" %>">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="<%= "event-#{event.id}-label" %>">Attendees for <%= event.name %></h4>
+        <%= link_to "Print", '#', class: "btn dark btn-outline btn-circle btn-sm", onclick: "PrintElem('print-#{event.id}');" %>
+      </div>
+      <div class="modal-body">
+        <div class="table-scrollable table-scrollable-borderless" style="overflow: visible;">
+          <table class="table table-hover table-light">
+            <thead>
+            <tr class="uppercase">
+              <th>#</th>
+              <th class="text-center">Name</th>
+              <th class="text-center">Email</th>
+              <th class="text-center">Paid</th>
+              <th class="text-center">Attendance level</th>
+            </tr>
+            </thead>
+            <tbody>
+              <% if event.attendees.any? %>
+                <% event.attendees.each_with_index do |attendee, index| %>
+                  <% unless attendee.inviting %>
+                    <tr>
+                      <td><%= index + 1 %></td>
+                      <td class="text-center"><%= attendee.name %></td>
+                      <td class="text-center"><%= attendee.email %></td>
+                      <td class="text-center">
+                        <span class="label label-<%= attendee.paid? ? 'success' : 'default' %>">
+                          <%= attendee.is_paid? %>
+                        </span>
+                      </td>
+                      <td class="text-center">
+                        <% level = attendee.attendance_level %>
+                        <% if attendee.invitees.any? %>
+                          <% cost = level.try(:cost) ? level.try(:cost).to_f * attendee.seats_count : nil  %>
+                          <%= ["#{level.try(:name)} #{attendee.seats_count} Seats", number_to_currency(cost )].compact.join ', ' %>
+                        <% else %>
+                          <%= [level.try(:name), number_to_currency(level.try :cost)].compact.join ', ' %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

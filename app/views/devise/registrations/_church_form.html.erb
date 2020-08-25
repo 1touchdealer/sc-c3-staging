@@ -1,0 +1,371 @@
+<div class="top-content">
+  <div class="container" style="background: #a3cbdb; width:100%; min-height:100vh; padding-top:100px;">
+    <p class="registration-title">Church</p>
+    <p class="registration-title-secondary"><%= user_signed_in? ? 'edit' : 'registration' %></p>
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box" style="padding-bottom: 50px">
+        <%= form_for((user_signed_in? ? current_user : resource), as: resource_name, url: registration_path(resource_name), html: { method: (user_signed_in? ? :put : :post), class: 'f1'}) do |f| %>
+          <div class="f1-steps">
+            <div class="f1-progress">
+              <div class="f1-progress-line" data-now-value="<%= user_signed_in? ? 12 : 61 %>" data-number-of-steps="4" style="width: 12%;"></div>
+            </div>
+            <div class="f1-step active">
+              <div class="f1-step-icon"><i class="fa fa-user"></i></div>
+              <p style="margin-top:8px">Your Info</p>
+            </div>
+            <div class="f1-step">
+              <div class="f1-step-icon"><i class="fa fa-globe"></i></div>
+              <p style="margin-top:8px">The Church</p>
+            </div>
+            <div class="f1-step">
+              <div class="f1-step-icon"><i class="fa fa-cogs"></i></div>
+              <p style="margin-top:8px">Footprint</p>
+            </div>
+            <div class="f1-step">
+              <div class="f1-step-icon"><i class="fa fa-check"></i></div>
+              <p style="margin-top:8px">Confirm</p>
+            </div>
+          </div>
+
+          <fieldset>
+            <div class="form-group form-md-line-input  form-md-floating-label">
+              <div class="input-icon right">
+                <%= f.hidden_field :member_type, :value =>"church" %>
+                <%= f.text_field :name, class: "form-control", required: true %>
+                <%= f.label :name %>
+                <span class="help-block">Your name. ex: John Smith</span>
+                <i class="fa fa-user"></i>
+              </div>
+            </div>
+            <div class="form-group form-md-line-input  form-md-floating-label">
+              <div class="input-icon right">
+                <%= f.email_field :email, class: "form-control", email: true, required: true, readonly: (user_signed_in? ? true : false) %>
+                <%= f.label :email %>
+                <span class="help-block" >Email for login...</span>
+                <i class="fa fa-envelope-o"></i>
+              </div>
+              <% if resource.errors.include? :email %>
+                <span style="color: #a94442"><%= resource.errors[:email].join(', ') %></span>
+              <% end %>
+            </div>
+            <div class="form-group form-md-line-input  form-md-floating-label">
+              <div class="input-icon right">
+                <%= f.password_field :password, class: "form-control", minlength: 6, required: (user_signed_in? ? false : true) %>
+                <%= f.label :password %>
+                <span class="help-block">Must be at least 6 characters</span>
+                <i class="fa fa-unlock-alt"></i>
+              </div>
+            </div>
+            <div class="form-group form-md-line-input  form-md-floating-label">
+              <div class="input-icon right">
+                <%= f.password_field :password_confirmation, class: "form-control", equalTo: '#user_password' %>
+                <%= f.label :password_confirmation %>
+                <i class="fa fa-lock"></i>
+              </div>
+            </div>
+            <div class="f1-buttons">
+              <button type="button" class="btn btn-dark btn-next" style="width: 100%; margin-bottom:0">Next</button>
+            </div>
+          </fieldset>
+
+          <% if user_signed_in? %>
+            <%= f.fields_for :church_attributes do |church| %>
+              <fieldset>
+                <div class="form-group form-md-line-input  form-md-floating-label">
+                  <div class="input-icon right">
+                    <%= church.text_field :name, class: 'form-control', required: true %>
+                    <%= church.label :church_name, for: :name %>
+                    <i class="fa fa-id-card-o"></i>
+                  </div>
+                </div>
+<!--                 <div class="form-group form-md-line-input  form-md-floating-label">
+                  <div class="input-icon right">
+                    <%#= church.text_field :contact_email, class: 'form-control', required: true, email: true %>
+                    <%#= church.label :contact_email %>
+                    <i class="fa fa-envelope-o"></i>
+                  </div>
+                </div>
+ -->                <div class="form-group form-md-line-input form-md-floating-label">
+                  <div class="input-icon right">
+                    <%= church.text_field :website_url, id: 'websiteUrlField', class: 'form-control' %>
+                    <%= church.label :website_url %>
+                    <span class="help-block">Ex: https://www.google.com</span>
+                    <i class="fa fa-globe"></i>
+                  </div>
+                </div>
+
+<!--                 <div class="form-group form-md-line-input form-md-floating-label">
+                  <div class="input-icon right">
+                    <%#= church.text_field :facebook_url, class: 'form-control' %>
+                    <%#= church.label :facebook_url %>
+                    <span class="help-block">Ex: https://www.google.com</span>
+                    <i class="fa fa-facebook"></i>
+                  </div>
+                </div>
+ -->
+<!--                 <div class="form-group form-md-line-input form-md-floating-label">
+                  <div class="input-icon right">
+                    <%#= church.text_field :twitter_url, class: 'form-control'%>
+                    <%#= church.label :twitter_url %>
+                    <span class="help-block">Ex: https://www.google.com</span>
+                    <i class="fa fa-twitter"></i>
+                  </div>
+                </div>
+ -->
+<!--                 <div class="form-group form-md-line-input form-md-floating-label">
+                  <div class="input-icon right">
+                    <%#= church.text_field :gplus_url, class: 'form-control' %>
+                    <%#= church.label :gplus_url %>
+                    <span class="help-block">Ex: https://www.google.com</span>
+                    <i class="fa fa-google-plus"></i>
+                  </div>
+                </div>
+ -->
+                <div class="form-group form-md-line-input form-md-floating-label" style="margin-top:15px;">
+                  <%= church.text_area :description, class: 'form-control', rows: 3 %>
+                  <%= church.label :church_description, for: :description %>
+                </div>
+
+                <div class="row">
+                  <div class="form-group ">
+                    <div class="col-xs-12 col-md-8 col-md-offset-2" style="text-align:center">
+                      <h4 style="color:#555">Logo Image Upload</h4>
+
+                      <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+
+                          <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+
+                        </div>
+                        <div>
+                          <span class="btn red btn-outline btn-file">
+                            <span class="fileinput-new"> Select image </span>
+                            <span class="fileinput-exists"> Change </span>
+                            <%= church.file_field :logo %>
+                          </span>
+                          <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="f1-buttons">
+                  <div class="col-xs-5 col-sm-4" style="padding-left:0; padding-right:0">
+                    <button type="button" class="btn btn-dark btn-previous" style="margin-bottom:0; width: 100%; text-align:center; padding:10px;">Previous</button>
+                  </div>
+
+                  <div class="col-xs-2 col-sm-4"></div>
+
+                  <div class="col-xs-5 col-sm-4" style="padding-left:0; padding-right:0">
+                    <button type="button" class="btn btn-dark btn-next" style="margin-bottom:0; width: 100%; text-align:center; padding:10px;">Next</button>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <div class="form-group form-md-line-input dropdown-input-field">
+                  <%= church.collection_select :church_category_id, ChurchCategory.order(:name), :id, :name, {prompt: true}, {class: 'form-control select-church-category', style: 'margin-top: 10px;', required: true} %>
+                  <%= church.label :denomination, for: :church_category_id %>
+                </div>
+
+                <div class="form-group form-md-line-input dropdown-input-field">
+                  <%= church.collection_select :region_id, Region.order(:name), :id, :name, {prompt: true}, class: 'form-control select-church-region', style: 'margin-top: 10px;', required: true %>
+                  <%= church.label :region, for: :region_id %>
+                </div>
+
+                <div class="form-group mt-repeater locations" style="padding-top: 32px">
+                  <div data-repeater-list="user[church_attributes][locations_attributes]">
+                    <div data-repeater-item="" class="mt-repeater-item">
+                      <div class="row mt-repeater-row" style="padding-left: 10px; padding-right: 0px;">
+                        <div class="form-head">
+                          <h3><i class="fa fa-home"></i> Address</h3>
+                          <a href="javascript:;" data-repeater-delete="" class="btn btn-danger mt-repeater-delete">
+                            <i class="fa fa-close"></i>
+                          </a>
+                        </div>  
+<!--                         <div class="col-xs-11" style="padding-left: 7px;">
+                          <label class="control-label" style="font-size: 14px; color: #888; font-weight: bold;">Address</label>
+                          <input class="form-control autocomplete-address" placeholder="Start Typing..." type="text" required>
+                          <input class="address_line1" name="address_line1" type="hidden">
+                          <input class="address_line2" name="address_line2" type="hidden">
+                          <input class="address_city" name="address_city" type="hidden">
+                          <input class="address_state" name="address_state" type="hidden">
+                          <input class="address_zip" name="address_zip" type="hidden">
+                        </div>
+ -->
+
+
+                        <div style="padding-left: 7px;" class="church-error1">
+                          <label class="control-label" style="font-size: 14px; color: #888; font-weight: bold;">Address Line1</label>
+                          <span class="red-color">*</span>
+                          <%= church.text_field :address_line1, class: "address_line1 form-control", required: true %>
+                          <div id="church_address_line1" class="error" ></div>
+                        </div>
+
+                        <div style="padding-left: 7px;" class="church-error2">
+                          <label class="" style="color: #888; font-size:13px">Address Line2</label>
+                            <%= church.text_field :address_line2, class: "address_line2 form-control" %>
+                          <div id="church_address_line2" class="error" ></div>
+                        </div>
+
+                        <div style="padding-left: 7px;" class="church-error3">
+                          <label class="" style="color: #888; font-size:13px">City</label>
+                          <span class="red-color">*</span>
+                          <%= church.text_field :address_city, class: "address_city form-control" %>
+                          <div id="church_city" class="error" ></div>
+                        </div>
+
+                        <div style="padding-left: 7px;" class="church-error4">
+                          <label class="" style="color: #888; font-size:13px">State</label>
+                          <span class="red-color">*</span>
+                          <%= church.select :address_state, CS.states(:us).map{|a| [a[1], a[0]]}, {prompt: true}, {class: 'address_state form-control', style: 'margin-top: 10px;', required: true} %>
+
+                          <%#= church.text_field :address_state, class: "address_state form-control" %>
+                          <div id="church_state" class="error" ></div>
+                        </div>
+
+                        <div style="padding-left: 7px;" class="church-error5">
+                          <label class="" style="color: #888; font-size:13px">Zip code</label>
+                          <span class="red-color">*</span>
+                          <%= church.text_field :address_zip, class: "address_zip form-control" %>
+                          <div id="church_zipcode" class="error" ></div>
+                        </div>
+
+
+
+
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
+                    <i class="fa fa-plus"></i> Add Location
+                  </a>
+                </div>
+                <div class="f1-buttons">
+                  <div class="col-xs-5 col-sm-4" style="padding-left:0; padding-right:0">
+                    <button type="button" class="btn btn-dark btn-previous" style="margin-bottom:0; width: 100%; text-align:center; padding:10px;">Previous</button>
+                  </div>
+                  <div class="col-xs-2 col-sm-4">
+                </div>
+                <div class="col-xs-5 col-sm-4" style="padding-left:0; padding-right:0">
+                  <button type="button" class="btn btn-dark btn-next" 
+                  id="church_form"
+                  style="margin-bottom:0; width: 100%; text-align:center; padding:10px;">Next</button>
+                </div>
+              </fieldset>
+            <% end %>
+          <% end %>
+
+          <fieldset>
+            <div class="row text-center" style="font-family: 'Lato'; font-size: 14px; ">
+              <p class="text-align:center">
+                <%=user_signed_in? ? 'Thanks for completing Registration!' : 'Please read and agree to the terms and agreements, then checkout using our secure Stripe checkout feature to submit your account for approval.'%>
+              </p>
+            </div>
+            <div class="row">
+              <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+                <p class="text-center" style="font-weight: bold">
+                  Annual Church Membership Fee: $99.00
+                </p>
+                <div class="md-checkbox-inline">
+                  <div class="md-checkbox has-success">
+                    <input name="terms_accepted" id="church-terms-checkbox" class="md-check" type="checkbox"  data-toggle="modal"  data-target="#termsModal" data-class="openTermsModal" required <%= user_signed_in? ? :checked : :unchecked %> <%=user_signed_in? ? :disabled : ''%>>
+                    <label for="church-terms-checkbox">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span> Terms and Conditions </label>
+                  </div>
+                </div>
+                <div class="md-checkbox-inline">
+                  <div class="md-checkbox has-success">
+                    <input name="covenant_accepted" id="church-covenant-checkbox" class="md-check" type="checkbox" data-toggle="modal"  data-target="#covenantModal" data-class="openCovenantModal" required <%= user_signed_in? ? :checked : :unchecked %> <%=user_signed_in? ? :disabled : ''%>>
+                    <label for="church-covenant-checkbox">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span> Convenant Agreement </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row social-share-row">
+              <div class="col-xs-2" style="padding-right:0; padding-top: 10px;font-weight: 700;">
+                Share:
+              </div>
+              <div class="col-xs-10" style="padding-left:0;">
+                <%= social_share_button_tag("Just Signed Up My Church For SC-C3", :url => root_url) %>
+              </div>
+            </div>
+            <div class="f1-buttons">
+              <div class="col-xs-12">
+                <button type="submit" class="btn btn-dark btn-submit" style="margin-bottom:0; width: 100%; text-align:center; padding:10px;">Next</button>
+              </div>
+            </div>
+          </fieldset>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <%= render "devise/registrations/terms_modals/terms_and_agreements" %>
+  <%= render "devise/registrations/terms_modals/church_covenant" %>
+</div>
+</div>
+
+<!-- Add check for website url field to force http(s) -->
+<script>
+  document.getElementById("websiteUrlField").addEventListener("keyup", forceHttpOrHttpsUrl);
+
+  //-- Check if url begins with http(s) if not then add it
+  //-  Example usage: "document.getElementById("websiteUrlField").addEventListener("keyup", forceHttpOrHttpsUrl);"
+  function forceHttpOrHttpsUrl() {
+    var element = this;
+    var url = element.value;
+
+    // Check if the url input does not begin with http(s)
+    if(!url.match(/^https?:\/\//))
+    {
+      // Only add http(s) if the url input becomes empty/blank or the user has typed more than 7 characters
+      // 7 because other wise you cannot delete the "http://" without it auto adding a new 'http://' string
+      // to the beginging of the iput again
+      if(url.length > 7 || url.length == 0){
+        url = 'http://' + url;
+        element.value = url;
+      }
+    }
+  }
+
+  <% if user_signed_in? %>
+    window.onload = function () {
+      $('.f1 .btn-next').first().click();
+    };
+  <% end %>
+</script>
+<style type="text/css">
+.error {
+  color: #ff0000
+}
+.all {
+  color: #ff0000;
+  text-align: center;
+}
+.red-color {
+  color: red;
+}
+.form-head{
+  width: 100%;
+  float: left;
+  margin-bottom: 8px;
+}
+.form-head .mt-repeater-delete{
+  float: right;
+  margin-top: 0;
+  padding: 3px 7px;
+}
+.form-head h3{
+  float: left;
+  font-size: 20px;
+}
+.has-error label {
+    color: #e73d4a !important;
+}
+</style>

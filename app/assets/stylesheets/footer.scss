@@ -1,0 +1,135 @@
+footer {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  min-height: 75px;
+  position: relative;
+}
+footer:before {
+  background-color: rgba(0,0,0,0.5);
+  content: '';
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+footer.footer-home {
+  background-color: #060807;
+  background-image: none;
+  color: #efefef;
+  font-size: 0.875em;
+  height: auto;
+  line-height: 30px;
+  min-height: 0;
+  overflow: hidden;
+  padding: 10px 0;
+  text-align: center;
+}
+footer.footer-home:before {
+  display: none;
+}
+footer.footer-home p {
+  margin: 0;
+}
+footer p {
+  color: #97a7b6;
+  margin-top: 30px;
+}
+footer .address {
+  float: right;
+}
+footer .container {
+  position: relative;
+  z-index: 2;
+}
+footer .copy {
+  float: left;
+}
+
+.btn.btn-make-donation {
+  background-color: #eb4b4b;
+  border: 2px solid #eb4b4b;
+  -webkit-border-radius: 33px;
+  border-radius: 33px !important;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 700;
+  height: 66px;
+  line-height: 62px;
+  margin: 30px 0;
+  padding: 0;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+}
+.btn.btn-make-donation:hover {
+  background-color: transparent;
+  color: #eb4b4b;
+}
+
+/***
+Social Icons
+***/
+.social-icons {
+  padding: 0;
+  margin: 0; }
+  .social-icons:before, .social-icons:after {
+    content: " ";
+    display: table; }
+  .social-icons:after {
+    clear: both; }
+  .social-icons li {
+    float: left;
+    display: inline;
+    list-style: none;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    text-indent: -9999px; }
+    .social-icons li > a {
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
+      -o-border-radius: 2px;
+      border-radius: 2px;
+      width: 28px;
+      height: 28px;
+      display: block;
+      background-position: 0 0;
+      background-repeat: no-repeat;
+      transition: all 0.3s ease-in-out;
+      -o-transition: all 0.3s ease-in-out;
+      -ms-transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      -webkit-transition: all 0.3s ease-in-out; }
+    .social-icons li:hover > a {
+      background-position: 0 -38px; }
+  .social-icons.social-icons-color > li > a {
+    opacity: 0.7;
+    background-position: 0 -38px !important; }
+    .social-icons.social-icons-color > li > a:hover {
+      opacity: 1; }
+  .social-icons.social-icons-circle > li > a {
+    border-radius: 25px !important; }
+
+.social-icons li .facebook {
+    background: image-url("social/facebook.png") no-repeat;
+}
+
+.social-icons li .twitter {
+    background: image-url("social/twitter.png") no-repeat;
+}
+
+.social-icons li .linkedin {
+    background: image-url("social/linkedin.png") no-repeat;
+}
+
+.social-icons li .youtube {
+    background: image-url("social/youtube.png") no-repeat;
+}
+
+.social-icons li .instagram {
+    background: image-url("social/instagram.png") no-repeat;
+}

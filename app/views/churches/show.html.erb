@@ -1,0 +1,48 @@
+<!-- begin Content -->
+<section id="business-show" class="section-home" style="min-height:95vh; background: #a3cbdb;">
+  <div class="container show-container">
+    <h2 class="show-title" style="color:white"><%= @church.name %></h2>
+    <section class="show-section">
+      <div class="col-sm-6 col-md-8" style="">
+        <div class="row" style="text-align:center">
+          <%- if @church.logo?%>
+            <%= image_tag @church.logo.url, style: "padding: 30px; width: 90%;"%>
+          <% else %>
+            <img src="//placehold.it/400x300" style= "padding: 30px; width: 90%;">
+          <% end %>
+        </div>
+        <div class="row" style="width:80%; margin-left:10%">
+          <p>
+            <%= @church.description %>
+          </p>
+        </div>
+        <div class="row" style="text-align:center">
+          <%= link_to "Our Website", @church.website_url, class: "btn btn-dark", style: "margin-top: 10px;", :target => "_blank" %>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <h4>Contribute</h4>
+        <div class="row" style="text-align:center">
+          <% if @church.admin_users.present? and @church.admin_users.first.stripe_user_id.present? %>
+            <%= link_to "Make a donation", new_charitable_donation_path(charity_type: 'Church', charity_id: @church), id:"", class: "btn btn-make-donation", style: "" %>
+          <% else %>
+            <button class="btn btn-make-donation disabled">Make a donation</button>
+          <% end %>
+        </div>
+        <hr />
+        <h4>Social Media</h4>
+        <ul class="social" style="font-size: .8em;">
+					<li><a href="<%= @church.facebook_url %>" class="facebook"><i class="icon-facebook"></i><span style="font-size:.7em">Follow Us On Facebook</span></a></li>
+					<li><a href="<%= @church.twitter_url %>" class="twitter"><i class="icon-twitter"></i><span style="font-size:.7em">Follow Us On Twitter</span></a></li>
+					<li><a href="<%= @church.gplus_url %>" class="gplus"><i class="icon-gplus"></i><span style="font-size:.7em">Follow Us On GPlus</span></a></li>
+				</ul>
+        <hr />
+        <h4>Categories</h4>
+        <ul class="categories">
+					<li><a href="#"><i class="icon-plus"></i><%= @church.church_category.try(:name) %></a></li>
+				</ul>
+      </div>
+    </section>
+  </div>
+</section>
+<!-- end Content -->

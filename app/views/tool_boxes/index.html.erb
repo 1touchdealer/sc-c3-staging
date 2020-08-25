@@ -1,0 +1,64 @@
+<article id="members" style="background: white; padding-top: 60px;">
+  <div class="container">
+    <h2>Toolbox</h2>
+    <h3 style="padding-bottom:30px">Our Source of Resources and Links for members and non-members</h3>
+
+
+    <!-- Handle centering of boxes based on 2 or 4 -->
+    <% if current_user %>
+      <div class="col-sm-3">
+    <% else %>
+      <div class="col-sm-3 col-sm-offset-3">
+    <% end %>
+
+    <!-- Links for members/non-members -->
+        <%= link_to documents_path, class: "donation-item member-container", style: "border-radius: 8px" do %>
+        <%= image_tag("tool-box-images/documents.jpg", style: "border-radius: 8px 8px 0 0;") %>
+        <div class="member-link-text">
+          Documents
+        </div>
+        <% end %>
+    </div>
+
+    <div class="col-sm-3">
+      <%= link_to tool_box_resources_path, class: "donation-item member-container", style: "border-radius: 8px"  do %>
+      <%= image_tag("tool-box-images/resources.jpg",style: "border-radius: 8px 8px 0 0;") %>
+      <div class="member-link-text">
+        Resources
+      </div>
+      <% end %>
+    </div>
+
+    <!-- If member is signed in -->
+    <% if current_user %>
+
+      <div class="col-sm-3">
+        <%= link_to tool_box_events_path, class: "donation-item member-container", style: "border-radius: 8px"  do %>
+        <%= image_tag("tool-box-images/events.jpg",style: "border-radius: 8px 8px 0 0;") %>
+        <div class="member-link-text">
+          Events
+        </div>
+        <% end %>
+      </div>
+
+      <div class="col-sm-3">
+        <a class="donation-item member-container" style="border-radius: 8px" href="https://www.myopsource.com/sc-c3-jobs" target="_blank">
+        <%= image_tag("tool-box-images/job-board.jpg",style: "border-radius: 8px 8px 0 0;") %>
+        <div class="member-link-text">
+          Job Board
+        </div>
+        </a>
+      </div>
+
+    <% end %>
+  </div>
+</article>
+
+    <!-- <div class="row">
+      <h3>Video's</h3>
+      <div class="col-sm-12 text-center">
+        <%= link_to 'https://www.youtube.com/channel/UCom9kG5pqSGLkBb1qGIMiNg', class: 'youtube-icon-link', target: :_blank do  %>
+            <%= image_tag 'icons/youtube.png', class: 'img-responsive'  %>
+        <%- end %>
+      </div>
+    </div> -->

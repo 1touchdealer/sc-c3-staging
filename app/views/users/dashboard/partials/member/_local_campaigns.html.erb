@@ -1,0 +1,51 @@
+<div class="col-sm-12 chop">
+  <!-- BEGIN BORDERED TABLE PORTLET-->
+  <div class="portlet light portlet-fit ">
+      <div class="portlet-title">
+          <div class="caption">
+              <span class="caption-subject sbold uppercase">Local Fundraisers</span>
+          </div>
+          <div class="actions">
+             <div class="btn-group btn-group-devided">
+               <%= link_to "View All", campaigns_path, class: "btn btn-sm active btn-blue" %>
+             </div>
+         </div>
+
+      </div>
+      <div class="portlet-body">
+          <div class="table-scrollable table-scrollable-borderless" style="overflow: visible;">
+              <table class="table table-hover table-light">
+                  <thead>
+                      <tr class="uppercase" >
+                          <th> Name </th>
+                          <th class="text-center"> Goal</th>
+                          <th class="text-center"> Age </th>
+                          <th class="text-center"> Actions </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <%- if @local_campaigns.present? %>
+                      <%  @local_campaigns.each  do |campaign| %>
+                        <tr>
+                            <td><%= campaign.name %></td>
+                            <td class="text-center"><%= number_to_currency(campaign.goal_amount) %></td>
+                            <td class="text-center"><%= distance_of_time_in_words(Time.now, campaign.created_at) %></td>
+                            <td class="text-center">
+                              <div class="actions" class="text-center">
+                                <div class="btn-group">
+                                  <%= link_to 'View', campaign, class:"btn dark btn-outline btn-circle btn-sm" %>
+                                </div>
+                            </div>
+                           </td>
+                        </tr>
+                      <% end %>
+                    <% else %>
+                      <tr class="text-center"><td colspan="4" >Sorry we could not find any Fundraisers in your Region</td></tr>
+                    <% end %>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+  <!-- END BORDERED TABLE PORTLET-->
+</div>

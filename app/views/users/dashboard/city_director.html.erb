@@ -1,0 +1,74 @@
+<div id="dashboard-container" class="container" style="background: #a3cbdb; min-height:100vh">
+  <div class="row" style="margin-left:0; margin-right:0; margin-bottom:15px;">
+    <h2 class="page-title" style=""> <%= current_user.name %></h2>
+    <strong style="padding-left: 15px;">Region: <%= current_user.region.name %></strong>
+  </div>
+  <div class="row ">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="dashboard-stat dashboard-stat-v2" style="background: #455A64; color: white; border: 1px solid white;">
+        <div class="visual" style="opacity: .1;">
+          <i class="fa fa-users"></i>
+        </div>
+        <div class="details" style="">
+          <div class="number">
+            <span data-counter="counterup" data-value="12,5"><%= @new_entities[:alliances] %></span> </div>
+          <div class="desc"> New Alliances </div>
+          <div class="total"><%=@alliances.count%></div>
+          <div class="desc"> Total Users </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="dashboard-stat dashboard-stat-v2" style="background: #0A5B8D; color: white; border: 1px solid white;">
+        <div class="visual" style="opacity: .1;">
+          <i class="fa fa-gift"></i>
+        </div>
+        <div class="details" style="">
+          <div class="number">
+            <span data-counter="counterup" data-value="12,5"><%= @new_entities[:businesses] %></span> </div>
+          <div class="desc"> New Businesses </div>
+          <div class="total"><%=@businesses.count%></div>
+          <div class="desc"> Total Users </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="dashboard-stat dashboard-stat-v2 green" style="background:#3cc05f; border: 1px solid white;">
+        <div class="visual">
+          <i class="fa fa-support"></i>
+        </div>
+        <div class="details">
+          <div class="number">
+            <span data-counter="counterup" data-value="549"><%= @new_entities[:churches] %></span>
+          </div>
+          <div class="desc"> New Churches </div>
+          <div class="total"><%=@churches.count%></div>
+          <div class="desc"> Total Users </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="dashboard-stat dashboard-stat-v2 purple" style="border: 1px solid white;">
+        <div class="visual">
+          <i class="fa fa-calendar"></i>
+        </div>
+        <div class="details">
+          <div class="number">
+            <span data-counter="counterup" data-value="89"><%= @new_entities[:members] %></span></div>
+          <div class="desc"> New Members </div>
+          <div class="total"><%=@users.count%></div>
+          <div class="desc"> Total Users </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= render 'users/dashboard/partials/city_director/entity_table', entities: @alliances, title: 'Alliances' %>
+  <%= render 'users/dashboard/partials/city_director/entity_table', entities: @businesses, title: 'Businesses' %>
+  <%= render 'users/dashboard/partials/city_director/entity_table', entities: @churches, title: 'Churches' %>
+  <%= render 'users/dashboard/partials/city_director/entity_table', entities: @users, title: 'Members' %>
+  <%= render 'users/dashboard/partials/city_director/events', events: @events %>
+  <%= render 'users/dashboard/partials/city_director/helpful_links' %>
+  <%= render 'users/dashboard/partials/member/account_info' %>
+
+</div>

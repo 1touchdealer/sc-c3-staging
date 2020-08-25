@@ -1,0 +1,100 @@
+<section id="campaign-show" class="section-home" style="min-height:95vh; background: #a3cbdb;">
+  <div class="container show-container">
+    <h2 class="show-title" style="color:white"><%= @campaign.name %></h2>
+    <section class="show-section">
+      <div class="col-sm-6" style="">
+        <div class="row" style="text-align:center; margin-left: 0; margin-right:0">
+          <%- if @campaign.image?%>
+            <%= image_tag @campaign.image.url, style: "padding: 30px; width: 90%;" %>
+          <% else %>
+            <img src="//placehold.it/400x300" style= "padding: 30px; width: 90%;">
+          <% end %>
+        </div>
+        <div class="row" style="width:90%; margin-left:5%; font-size:.9em">
+          <p>
+            <%= @campaign.description %>
+          </p>
+        </div>
+        </div>
+      <div class="row">
+      <div class="col-sm-6">
+                <h4 style="font-size: 1em; text-transform: none;font-weight: 300;"><span style="font-weight:600; font-size: 1.4em"><%= number_to_currency(@campaign.total_amount.present? ? @campaign.total_amount : 0, precision: 0) %></span> of <%=number_to_currency(@campaign.goal_amount, precision: 0) %> goal</h4>
+
+                    <div class="progress" style="margin-bottom: 5px;">
+                        <div class="progress-bar" title="" role="progressbar" style="width: <%= (@campaign.total_amount.to_f / @campaign.goal_amount) * 100 %>%;" data-original-title="$2.200">
+                <span class="sr-only"></span>
+              </div>
+                    </div>
+            <span style="font-size:.8em; font-weight:400"> Contributed by <%=(@campaign.campaign_donations.count)%> people in <%= distance_of_time_in_words(Time.now, @campaign.created_at) %></span>
+
+            <div class="row" style="text-align:center">
+              <%= link_to "Make a donation", new_campaign_campaign_donation_path(@campaign), id:"", class: "btn btn-make-donation", style: "" %>
+            </div>
+
+      <%- if @campaign.needs.count > 0 %>
+        <h4>Items Needed</h4>
+
+        <div class="panel-group" id="campaign-resources-panel">
+          <% @campaign.needs.open.each do |need| %>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion-work" href="#collapse<%=need.id%>">
+                    <i class="icon-down-circled"></i>
+                    <%= need.title.present? ? need.title : Category.find(need.category_id).name %>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse<%=need.id%>" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <p><%= need.description %></p>
+                  <div class="row" style="text-align:center">
+                    <%= link_to 'Meet Need', new_need_resource_path(need), class: "btn btn-dark" %>
+                  </div>
+                </div>
+                    </div>
+                </div>
+          <% end %>
+          <% @campaign.needs.met.each do |need| %>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion-work" href="#collapse<%=need.id%>">
+                    <i class="fa fa-check-square-o fa-lg" style="padding-top:8px; padding-right:3px; color: green"></i>
+                    <%#= need.title.present? ? need.title : Category.find(need.category_id).name %>
+                    <%= need.title.present? ? need.title : 'Untitled'%>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse<%=need.id%>" class="panel-collapse collapse">
+                        <div class="panel-body">
+                  <p class="text-center" style="font-weight:400; color: green;">
+                    Thanks For Helping Us Meet This Need!
+                  </p>
+                            <p><%= need.description %></p>
+
+                </div>
+                    </div>
+                </div>
+          <% end %>
+          </div>
+      <% end %>
+      <% if @campaign.video_link.present? %>
+        <div class="video">
+          <%= embed_from_youtube_url(@campaign.video_link) %>
+        </div>
+      <% end %>
+      </div>
+      </div>
+      <div class="row social-share-row">
+        <div class="col-xs-2" style="padding-right:0; padding-top: 10px;font-weight: 700;">
+          Share:
+        </div>
+        <div class="col-xs-10" style="padding-left:0;">
+          <%= social_share_button_tag(@campaign.name, :url => campaign_url(@campaign),
+            :image => image_url(@campaign.image.url), :'data-type' => 'photo') %>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

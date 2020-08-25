@@ -1,0 +1,81 @@
+<!-- begin About Us-->
+<article class="about-us" id="about-us">
+  <div class="container">
+    <h2>About Us</h2>
+    <h3>The solid foundation by which the South Carolina Christian Chamber of Commerce is built is through the vision and values shared by members.</h3>
+    <p> The vision is the compass that directs and unites us with a common direction and the values are the principles that guide us as we pursue the vision. The vision is “To unify Christians in South Carolina by connecting commerce and community to positively impact our culture for Christ.”</p>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs tabs-horizontal text-center" role="tablist">
+      <% @about_categories.each_with_index do |category, i| %>
+        <li class="<%= 'active' if i == 0 %>"><a href="#<%= "about#{i}" %>" role="tab" data-toggle="tab"><%= category.name %></a></li>
+      <% end %>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <% @about_categories.each_with_index do |category, i| %>
+        <div class="tab-pane <%= 'active' if i == 0 %>" id="<%= "about#{i}" %>">
+          <div class="row">
+            <% if category.about_paragraphs.count > 1 %>
+              <% category.about_paragraphs.order(:position).each do |paragraph| %>
+                <% if (category.id == 2) || (category.id == 3) %>
+                  <a id="openModalBtn" href="" style="background-size:cover;"
+                                       data-toggle="modal"
+                                       data-target="#myModal"
+                                       data-name="<%= paragraph.title %>"
+                                       data-text="<%= paragraph.text %>"
+                                       data-image="<%= paragraph.image.url(:medium) if paragraph.image.present?%>"
+                                       data-class="openMemberModal">
+
+                <% end %>
+                <div class="col-md-<%= [12 / category.about_paragraphs.count, 3].max %> col-sm-6 about-icon">
+                  <i class="<%= "icon-#{paragraph.icon}" if paragraph.icon.present? %>" style="<%= "background-image: url(#{paragraph.image.url(:medium)})" if paragraph.image.present? %>"></i>
+                  <h4><%= paragraph.title %></h4>
+                  <p><%= paragraph.text %></p>
+                </div>
+                <% if (category.id == 2) || (category.id == 3)  %>
+                  </a >
+                <% end %>
+              <% end %>
+            <% else %>
+              <% category.about_paragraphs.order(:position).each do |paragraph| %>
+                <div class="col-sm-3 about-icon">
+                  <i class="<%= "icon-#{paragraph.icon}" if paragraph.icon.present? %>" style="<%= "background-image: url(#{paragraph.image.url(:medium)})" if paragraph.image.present? %>"></i>
+                </div>
+                <div class="col-sm-9">
+                  <h4><%= paragraph.title %></h4>
+                  <p><%= paragraph.text %></p>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+
+      <% end %>
+    </div>
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header" style="text-align:center; border:none">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"></h4>
+          </div>
+          <div class="modal-body" style="text-align:center;">
+            <img src="" class="modal-image" style="width:auto;"/>
+            <p class="modal-info" style="">
+            </p>
+          </div>
+          <div class="modal-footer" style="border:none">
+            <button type="button" class="btn btn-dark" style="width:100%; margin-bottom:0" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</article>
+<!-- end About Us-->

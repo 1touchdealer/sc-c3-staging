@@ -1,0 +1,49 @@
+<article class="tool-box" id="tool-box">
+  <div class="container">
+    <h2>Documents</h2>
+    <h3 style="padding-bottom:30px">Download or email an invite to a friend or coworker</h3>
+    <div class="col-sm-12">
+      <table class="table js-document-table">
+        <tr class="active">
+          <th class="col-sm-8">File</th>
+          <th>Download</th>
+          <th>Email</th>
+        </tr>
+        <tr>
+          <td>Alliance Invite</td>
+          <td><%= link_to 'Download', tool_box_path(file_name: 'SC C3 Invite Alliance', format: :pdf),
+                          class: 'btn btn-default' %></td>
+            <%#= mail_to '', 'Invite', body: @documents_texts[:alliance], class: 'btn btn-default' %>
+          <td><%= link_to 'Invite', new_invite_path(:body => @documents_texts[:alliance]),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#exampleModal', class: 'btn btn-default'}  %></td>
+        </tr>
+        <tr>
+          <td>Business Invite</td>
+          <td><%= link_to 'Download', tool_box_path(file_name: 'SC C3 Invite Business', format: :pdf),
+                          class: 'btn btn-default' %></td>
+          <%#= mail_to '', 'Invite', body: @documents_texts[:business], class: 'btn btn-default' %>
+          <td><%= link_to 'Invite', new_invite_path(:body => @documents_texts[:business]),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#exampleModal', class: 'btn btn-default'}  %></td>
+        </tr>
+        <tr>
+          <td>Church Invite</td>
+          <td><%= link_to 'Download', tool_box_path(file_name: 'SC C3 Invite Church', format: :pdf),
+                          class: 'btn btn-default' %></td>
+          <%#= mail_to '', 'Invite', body: @documents_texts[:church], class: 'btn btn-default' %>
+          <td><%= link_to 'Invite', new_invite_path(:body => @documents_texts[:church]),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#exampleModal', class: 'btn btn-default'}  %></td>
+        </tr>
+        <tr>
+          <td>Individual Invite</td>
+          <td><%= link_to 'Download', tool_box_path(file_name: 'SC C3 Invite Individual', format: :pdf),
+                          class: 'btn btn-default' %></td>
+          <%#= mail_to '', 'Invite', body: @documents_texts[:individual], class: 'btn btn-default' %>
+          <%#= link_to 'Invite', new_invite_path(:body => @documents_texts[:individual] ),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#exampleModal', class: 'btn btn-default'}  %>
+          <td><%= link_to 'Invite', new_invite_path(:body => @documents_texts[:individual]),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#exampleModal', class: 'btn btn-default'}  %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div id="mailer_div">
+    <h1></h1>
+  </div>    
+</article>
+
+

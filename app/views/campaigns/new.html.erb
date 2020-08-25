@@ -1,0 +1,255 @@
+<div class="top-content">
+  <div class="container" style="background: #a3cbdb; width:100%; min-height:100vh; padding-top:90px;">
+    <p class="step-form-title">Sumbit Campaign</p>
+      <div class="row">
+          <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box" style="padding-bottom: 50px">
+            <%= form_for @campaign, html: {class: 'f1', role: 'form'} do |f| %>
+          		<div class="f1-steps">
+          			<div class="f1-progress">
+          			    <div class="f1-progress-line" data-now-value="12" data-number-of-steps="4" style="width: 12%;"></div>
+          			</div>
+          			<div class="f1-step active" >
+          				<div class="f1-step-icon"><i class="fa fa-address-card"></i></div>
+          				<p style="margin-top:8px">About</p>
+          			</div>
+          			<div class="f1-step" >
+          				<div class="f1-step-icon"><i class="fa fa-tags"></i></div>
+          				<p style="margin-top:8px">Goals</p>
+          			</div>
+                <div class="f1-step" >
+                  <div class="f1-step-icon"><i class="fa fa-cubes"></i></div>
+                  <p style="margin-top:8px">Footprint</p>
+                </div>
+                <div class="f1-step">
+                <div class="f1-step-icon"><i class="fa fa-users"></i></div>
+                <p style="margin-top:8px">Confirm</p>
+              </div>
+          		</div>
+<!-- =========================================== FIRST STEP ============================================= -->
+          		<fieldset>
+                  <div class="form-group form-md-line-input form-md-floating-label step-form-input-row">
+                    <div class="input-icon right">
+                        <%= f.text_field :name, class: 'form-control', required: true %>
+                        <%= f.label :campaign_title, for: :name %>
+                        <span class="help-block">Your name. ex: Can Food Drive</span>
+                        <i class="fa fa-pencil"></i>
+                    </div>
+                  </div>
+                  <div class="form-group form-md-line-input form-md-floating-label" style="margin-top:15px;">
+                      <%= f.text_area :description, class: 'form-control', rows: 3 %>
+                      <%= f.label :description %>
+                  </div>
+                  <div class="row">
+                    <div class="form-group ">
+                      <div class="col-xs-12 col-md-8 col-md-offset-2" style="text-align:center">
+                        <h4 style="color:#999; margin-top: 0;">Image Upload</h4>
+                          <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                                <% if @campaign.image.exists? %>
+                                  <%= image_tag @campaign.image.url(:medium) %>
+                                <% else %>
+                                  <%= image_tag "http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" %>
+                                <% end %>
+                            </div>
+                            <div>
+                                <span class="btn red btn-outline btn-file">
+                                    <span class="fileinput-new"> Select image </span>
+                                    <span class="fileinput-exists"> Change </span>
+                                    <%= f.file_field :image %>
+                                  </span>
+                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                            </div>
+                          </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="f1-buttons">
+                      <button type="button" class="btn btn-dark btn-next step-form-btn">Next</button>
+                    </div>
+                  </fieldset>
+<!-- =========================================== SECOND STEP ============================================= -->
+                  <fieldset>
+                    <h4>How Can We Help?</h4>
+                    <div class="panel-group">
+                      <div class="panel" id="step-form-monetary-panel">
+                        <a id="step-form-monetary-button" data-toggle="collapse" data-parent="#accordion-work" href="#collapseService" style="text-decoration: none !important;">
+                    			<div class="panel-heading">
+                    				<h4 class="panel-title step-form-panel-title">
+                              Monetary
+                              <i id="step-form-monetary-i" class="fa fa-square-o fa-lg" style="float:right; margin-top: 3px;"></i>
+                    				</h4>
+                    			</div>
+                        </a>
+                  			<div id="collapseService" class="panel-collapse collapse">
+                  				<div class="panel-body">
+                            <!-- =========================================== Monetary Body ============================================= -->
+                            <div class="form-group form-md-line-input form-md-floating-label step-form-input-row">
+                              <div class="input-icon left">
+                                  <%= f.text_field :goal_amount, class: 'form-control edited', number: true, min: 1 %>
+                                  <%= f.label :goal_amount %>
+                                  <span class="help-block">Total monetary goal in dollars. ex: 150</span>
+                                  <i class="fa fa-usd"></i>
+                              </div>
+                            </div>
+
+                            <!-- =========================================== End Monetary Body ============================================= -->
+                          </div>
+                  			</div>
+                  		</div>
+                      <% if current_user.alliance_admin? || current_user.church_admin? || current_user.business_admin? %>
+                        <div class="panel" id="step-form-inkind-panel">
+                          <a id="step-form-inkind-button" data-toggle="collapse" data-parent="#accordion-work" href="#collapseMulti" style="text-decoration: none !important;">
+                            <div class="panel-heading">
+                              <h4 class="panel-title step-form-panel-title">
+                                In-Kind Donations
+                                <i id="step-form-inkind-i" class="fa fa-square-o fa-lg" style="float:right; margin-top: 3px;"></i>
+                              </h4>
+                            </div>
+                          </a>
+                          <div id="collapseMulti" class="panel-collapse collapse">
+                            <div class="panel-body">
+                              <!-- =========================================== In-kind Body =============================================== -->
+                              <div class="form-group mt-repeater" style="">
+                                <div data-repeater-list="campaign[needs_attributes]">
+                                  <div data-repeater-item="" class="mt-repeater-item">
+                                    <div class="row mt-repeater-row" style="">
+                                        <div class="col-xs-12" style="padding-left: 30px">
+                                          
+                                        <div class="row form-group">
+                                            <label style="font-weight:normal">Need Title</label>
+                                            <input type="text" name="title" class="form-control" ></textarea>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label style="font-weight:normal">Need Description</label>
+                                            <textarea name="description" class="form-control" rows="3" style="resize: vertical;"></textarea>
+                                        </div>
+                                      <div class="row">
+                                          <a href="javascript:;" data-repeater-delete="" class="btn btn-danger mt-repeater-delete" style="width: 100%; margin-top:0">
+                                              <i class="fa fa-close"></i> Remove
+                                          </a>
+                                      </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add" style="width:100%">
+                                    <i class="fa fa-plus"></i> Add Need</a>
+                              </div>
+                              <!-- =========================================== End In-kind Body ============================================= -->
+                            </div>
+                          </div>
+                        </div>
+                      <% end %>
+                  	</div>
+                      <div class="f1-buttons">
+                        <div class="col-sm-4 col-xs-6" style="padding-left:0">
+                            <button type="button" class="btn btn-dark btn-previous step-form-btn">Previous</button>
+                        </div>
+                        <div class="col-sm-4 col-sm-offset-4 col-xs-6" style="padding-right:0">
+                            <button id="campaign-second-step-next-btn" type="button" class="btn btn-dark btn-next step-form-btn">Next</button>
+                        </div>
+                      </div>
+                  </fieldset>
+<!-- =========================================== THIRD STEP ============================================= -->
+                  <fieldset>
+                    <!-- <h4>Region For Your Campaign?</h4> -->
+                    <div class="form-group form-md-line-input" style="padding-top:0 ; margin:0;">
+                      <%= f.label :region_id, style: 'margin-top: 10px;' %>
+                      <%= f.collection_select :region_id, Region.order(:name), :id, :name, {}, class: 'form-control select2 select-campaign-region' %>
+                    </div>
+                    <div class="form-group form-md-line-input" style="padding-bottom: 0px; margin-bottom:0; padding-top: 10px !important;">
+                      <%= f.label :campaign_category_id, style: 'margin-top: 10px;' %>
+                      <%= f.collection_select :campaign_category_id, CampaignCategory.order(:name), :id, :name, {}, class: 'form-control select2 select-campaign-category' %>
+                    </div>
+                    <div class="f1-buttons">
+                      <div class="col-sm-4 col-xs-6" style="padding-left:0">
+                          <button type="button" class="btn btn-dark btn-previous step-form-btn">Previous</button>
+                      </div>
+                      <div class="col-sm-4 col-sm-offset-4 col-xs-6" style="padding-right:0">
+                          <button id="last-next-btn" type="button" class="btn btn-dark btn-next step-form-btn">Next</button>
+                      </div>
+                    </div>
+                  </fieldset>
+<!-- =========================================== FORTH STEP ============================================= -->
+                  <fieldset>
+                    <h2 class="text-center" style="font-size: 30px;">Confirm Campaign Submission</h2>
+                    <p class="text-center" style="color:gray; font-size:12px; padding:0 15px;">
+                      Thanks for submitting a campaign. Please allow 24hrs for your request to be processed.
+                    </p>
+                    <hr />
+                    <div class="form-group form-md-line-input step-form-confirmation-form" style="padding-top: 0px !important;">
+                        <label for="form_control_1">Campaign Title</label>
+                        <div id="name_confirmation" class="form-control form-control-static"><%= @campaign.name %></div>
+                    </div>
+                    <div class="row step-form-confirmation-form" style="padding-top: 0px !important;">
+                      <label for="form_control_1">Campaign Description</label>
+                        <p id="description_confirmation">
+                          <%= @campaign.description %>
+                        </p>
+                    </div>
+                    <div class="form-group form-md-line-input step-form-confirmation-form" style="padding-top: 0px !important;">
+                        <label for="form_control_1">Goal Amount</label>
+                        <div id="goal_amount_confirmation" class="form-control form-control-static"> <%= number_to_currency @campaign.goal_amount %> </div>
+                    </div>
+                    <div class="form-group form-md-line-input step-form-confirmation-form" style="padding-top: 0px !important;">
+                        <label for="form_control_1">Region</label>
+                        <div id="region_confirmation" class="form-control form-control-static"> <%= @campaign.region.try(:name) %> </div>
+                    </div>
+                    <div class="form-group form-md-line-input step-form-confirmation-form" style="padding-top: 0px !important;">
+                        <label for="form_control_1">Campaign Category</label>
+                        <div id="campaign_category_confirmation" class="form-control form-control-static"> <%= @campaign.campaign_category.try(:name) %> </div>
+                    </div>
+                    <hr />
+                    <div class="f1-buttons">
+                      <div class="col-sm-4 col-xs-6" style="padding-left:0">
+                          <button type="button" class="btn btn-dark btn-previous step-form-btn">Previous</button>
+                      </div>
+                      <div class="col-sm-4 col-sm-offset-4 col-xs-6" style="padding-right:0">
+                          <%= f.submit "Submit", class: 'btn btn-dark btn-submit step-form-btn' %>
+                      </div>
+                    </div>
+                  </fieldset>
+
+              <% end %>
+          </div>
+      </div>
+
+  </div>
+</div>
+
+
+<%= javascript_tag do %>
+window.onload = function() {
+  $( "#last-next-btn" ).click(function() {
+    $('#name_confirmation').html( $('#campaign_name').val() );
+    $('#description_confirmation').html( $('#campaign_description').val() );
+    $('#goal_amount_confirmation').html( '$' + $('#campaign_goal_amount').val() );
+    if ($('#campaign_region_id').select2('data')[0]) {
+      $('#region_confirmation').html( $('#campaign_region_id').select2('data')[0].text );
+    }
+    if ($('#campaign_campaign_category_id').select2('data')[0]) {
+      $('#campaign_category_confirmation').html( $('#campaign_campaign_category_id').select2('data')[0].text );
+    }
+  });
+
+  $('#campaign-second-step-next-btn').click(function(){
+    if ($("#step-form-inkind-i").hasClass("fa-square-o")) {
+      $('a.btn.btn-danger.mt-repeater-delete').each(function (i) {
+        $(this).click();
+      });
+    }
+  });
+
+  $("#step-form-monetary-button").click(function(){
+      // $("#step-form-paid-event-panel").toggle();
+      $("#step-form-monetary-i").toggleClass("fa-square-o");
+      $("#step-form-monetary-i").toggleClass("fa-check-square-o");
+  });
+  $("#step-form-inkind-button").click(function(){
+      // $("#step-form-paid-event-panel").toggle();
+      $("#step-form-inkind-i").toggleClass("fa-square-o");
+      $("#step-form-inkind-i").toggleClass("fa-check-square-o");
+  });
+};
+<% end %>

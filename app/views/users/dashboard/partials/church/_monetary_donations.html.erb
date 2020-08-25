@@ -1,0 +1,46 @@
+<div class="col-sm-12 chop">
+  <!-- BEGIN BORDERED TABLE PORTLET-->
+  <div class="portlet light portlet-fit">
+      <div class="portlet-title">
+          <div class="caption">
+              <span class="caption-subject sbold uppercase">Monetary Donations Recieved</span>
+          </div>
+      </div>
+      <div class="portlet-body">
+          <div class="table-scrollable table-scrollable-borderless" style="overflow: visible;">
+              <table class="table table-hover table-light">
+                  <thead>
+                      <tr class="uppercase" >
+                          <th> Date </th>
+                          <th> Donated By </th>
+                          <th> Amount</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <% if @church.charitable_donations.count == 0 %>
+                      <tr class="text-center">
+                        <td colspan="3" >
+                          <% if @is_owner %>
+                              Sorry you have recieved 0 Monetary Donations
+                          <% else %>
+                              Sorry <%= @prefix %> has recieved 0 Monetary Donations
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% else %>
+                      <% @church.charitable_donations.each do |donation| %>
+                        <tr>
+                          <td><%= distance_of_time_in_words(Time.now, donation.created_at) %></td>
+                          <td><%= donation.user.try(:email) || donation.email %></td>
+                          <td><%= number_to_currency donation.donation_amount %></td>
+                        </tr>
+                      <% end %>
+                    <% end %>
+
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+  <!-- END BORDERED TABLE PORTLET-->
+</div>

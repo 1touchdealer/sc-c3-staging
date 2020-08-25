@@ -1,0 +1,46 @@
+<!-- begin Content -->
+<section id="event-show" class="section-home" style="min-height:95vh; background: #a3cbdb">
+  <div class="container show-container">
+    <h2 class="show-title" style="color:white"><%= @event.name %></h2>
+    <section class="show-section">
+      <div class="row">
+      <div class="col-xs-12">
+        <div class="event-show" >
+    			<span class="date"><span><%= @event.start.strftime("%d") %><em><%= @event.start.strftime("%b") %></em></span></span>
+            <%- if @event.image? %>
+              <%= image_tag @event.image.url, style: "object-fit:contain; max-height:400px" if @event.image?%>
+            <% else %>
+              <img src="http://www.placehold.it/400x300?text=no+image">
+            <% end %>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <h5><b>Starts:</b> <%= @event.start.strftime'%B %e, %Y | %l:%M%P' %></h5>
+        <div class="row" style="text-align:center">
+          <% if @event.start.past? %>
+            <button class="btn btn-dark" disabled="disabled">Event Closed</button>
+          <% elsif @event.registration_url.present? %>
+            <%= link_to 'Attend Link', @event.registration_url, class: "btn btn-dark"%>
+          <% elsif @event.user.super_admin? %>
+            <% if current_user && current_user.attending?(@event) %>
+              <button class="btn btn-dark" disabled="disabled">Your Attendance is Confirmed</button>
+            <% else %>
+              <%= link_to "Attend Event", new_event_attendee_path(@event), class: "btn btn-dark" %>
+            <% end %>
+          <% end %>
+        </div>
+        <%= simple_format(@event.description) %>
+      </div>
+          </div>
+      <div class="row social-share-row">
+        <div class="col-xs-3" style="padding-right:0; padding-top: 10px;font-weight: 700;">
+          Share:
+        </div>
+        <div class="col-xs-9" style="padding-left:0;">
+          <%= social_share_button_tag(@event.name, :url => event_url(@event), :image => @event.image.url) %>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+<!-- end Content -->

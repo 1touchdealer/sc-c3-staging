@@ -1,0 +1,34 @@
+<!-- begin Sponsors -->
+<article id="members" style="background: white;">
+  <div class="container">
+    <h2>Members</h2>
+    <h3 style="padding-bottom:30px">Please Support Our Community Organizations!</h3>
+
+    <div class="col-sm-4">
+        <%= link_to alliances_path, class: "donation-item member-container", style: "border-radius: 8px" do %>
+        <%= image_tag("member-images/alliance-member.jpg",style: "border-radius: 8px 8px 0 0;") %>
+        <div class="member-link-text">
+          Alliances <span>(Non-Profit)</span>
+        </div>
+        <% end %>
+    </div>
+
+    <div class="col-sm-4">
+      <%= link_to businesses_path, class: "donation-item member-container", style: "border-radius: 8px"  do %>
+      <%= image_tag("member-images/business-member.jpg",style: "border-radius: 8px 8px 0 0;") %>
+      <div class="member-link-text">
+        Businesses <span>(Universities)</span>
+      </div>
+      <% end %>
+    </div>
+    <div class="col-sm-4">
+      <%= link_to churches_path, class: "donation-item member-container", style: "border-radius: 8px"  do %>
+      <%= image_tag("member-images/church-member.jpg",style: "border-radius: 8px 8px 0 0;") %>
+      <div class="member-link-text">
+        Churches
+      </div>
+      <% end %>
+    </div>
+  </div>
+</article>
+<!-- end Sponsors -->

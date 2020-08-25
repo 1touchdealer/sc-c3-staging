@@ -1,0 +1,50 @@
+.entity-block{
+  background-color: white;
+  h3{
+    font-size: 28px;
+  }
+}
+.dashboard-stat .details .number{
+  padding-top: 10px;
+}
+.dashboard-stat .details .total{
+  font-size: 34px;
+  text-align: right;
+  line-height: 0;
+  padding-top: 25px;
+  padding-bottom: 18px;	
+}
+.dashboard-stat.dashboard-stat-v2 .total{
+	color: #fff;
+}
+.attendees-sc-c3 .modal-header h4{
+	width: initial;
+	float: left;
+}
+.attendees-sc-c3 .modal-header .btn-outline.btn-circle{
+	float: right;
+}
+.attendees-sc-c3 .modal-header{
+	height: 55px;
+}
+.width150.btn-outline.btn-circle{
+	width: 125px;
+	margin: 2px 0;
+}
+.calendar-btns{
+	position:absolute; 
+	bottom: 0; 
+	margin:0; 
+	left:0; 
+	right:0; 
+	padding:5px
+}
+.dashboard-stat{
+  min-height: 150px;
+}
+#cityDirectorDocumentsModal .modal-content {
+  height: 500px;
+  .modal-body .col-xs-12 {
+    overflow: auto;
+  }
+}

@@ -1,0 +1,40 @@
+<%= form_for @job_lead, html: {class: 'form-horizontal'} do |f| %>
+    <%= f.hidden_field :user_id %>
+
+    <% if @job_lead.errors.any? %>
+        <div class="form-group">
+          <%- @job_lead.errors.full_messages.each do |msg| -%>
+            <div class="alert alert-danger alert-dismissable" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <%= msg %>
+            </div>
+          <% end %>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :name do %>
+          Name <sup>*</sup>
+      <% end %>
+        <%= f.text_field :name, class: 'form-control', required: true %>
+    </div>
+    <div class="form-group">
+      <%= f.label :email do %>
+          Email <sup>*</sup>
+      <% end %>
+        <%= f.email_field :email, class: 'form-control', required: true %>
+    </div>
+    <div class="form-group">
+      <%= f.label :profession_title do %>
+          Profession <sup>*</sup>
+      <% end %>
+        <%= f.text_field :profession_title, class: 'form-control', required: true %>
+    </div>
+    <div class="form-group">
+      <%= f.label :resume %>
+      <%= f.file_field :resume, accept: '.pdf, .doc, .docx, .odt' %>
+    </div>
+    <div class="form-group">
+      <%= f.submit 'Submit', class: 'btn btn-default' %>
+    </div>
+<% end %>

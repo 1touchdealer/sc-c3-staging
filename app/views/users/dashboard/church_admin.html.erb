@@ -1,0 +1,67 @@
+<div id="dashboard-container" class="container" style="background: #a3cbdb; min-height:100vh">
+  <div class="row" style="margin-left:0; margin-right:0; margin-bottom:15px;">
+    <h2 class="page-title" style=""> <%= @church.name %> </h2>
+    <small style="padding-left: 15px;"><%= @church.created_at.strftime("Member Since: %m/%d/%Y") %></small>
+  </div>
+  <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat dashboard-stat-v2" style="background: #455A64; color: white; border: 1px solid white;">
+            <div class="visual" style="opacity: .1;">
+                <i class="fa fa-users"></i>
+            </div>
+            <div class="details" style="">
+                <div class="number">
+                    <span data-counter="counterup" data-value="12,5"><%= @church.users.count %></span> </div>
+                <div class="desc"> Members </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+          <div class="dashboard-stat dashboard-stat-v2" style="background: #0A5B8D; color: white; border: 1px solid white;">
+              <div class="visual" style="opacity: .1;">
+                  <i class="fa fa-gift"></i>
+              </div>
+              <div class="details" style="">
+                  <div class="number">
+                      <span data-counter="counterup" data-value="12,5"><%= @pending_inkind.count %></span> </div>
+                  <div class="desc"> Pending In-Kind Items </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+          <div class="dashboard-stat dashboard-stat-v2 green" style="background:#3cc05f; border: 1px solid white;">
+              <div class="visual">
+                  <i class="fa fa-support"></i>
+              </div>
+              <div class="details">
+                  <div class="number">
+                      <span data-counter="counterup" data-value="549"><%= @active_campaigns.count %></span>
+                  </div>
+                  <div class="desc"> Active Fundraisers </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+          <div class="dashboard-stat dashboard-stat-v2 purple" style="border: 1px solid white;">
+              <div class="visual">
+                  <i class="fa fa-calendar"></i>
+              </div>
+              <div class="details">
+                  <div class="number">
+                      <span data-counter="counterup" data-value="89"><%= number_to_currency(number_to_human(@total_funds_raised, units: {unit: "", thousand: "K", million: "M"})) %></span></div>
+                  <div class="desc"> Total Funds Raised</div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <%= render "users/dashboard/partials/alliance/your_campaigns" %>
+  <%= render "users/dashboard/partials/alliance/campaign_donations" %>
+  <%= render "users/dashboard/partials/alliance/campaign_inkind_donations" %>
+  <%= render "users/dashboard/partials/church/monetary_donations" %>
+  <%= render "users/dashboard/partials/church/your_members" %>
+  <% if @is_owner %>
+      <%= render "users/dashboard/partials/member/helpful_links" %>
+      <%= render "users/dashboard/partials/church/account_info" %>
+  <% end %>
+
+</div>

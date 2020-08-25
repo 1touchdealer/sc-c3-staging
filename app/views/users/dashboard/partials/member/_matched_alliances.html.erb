@@ -1,0 +1,48 @@
+<div class="col-sm-12 chop">
+  <!-- BEGIN BORDERED TABLE PORTLET-->
+  <div class="portlet light portlet-fit">
+      <div class="portlet-title">
+          <div class="caption">
+              <span class="caption-subject sbold uppercase">Matched Alliances</span>
+          </div>
+          <div class="actions">
+             <div class="btn-group btn-group-devided">
+               <%= link_to "View All", alliances_path, class: "btn btn-sm active btn-blue" %>
+             </div>
+         </div>
+      </div>
+      <div class="portlet-body">
+          <div class="table-scrollable table-scrollable-borderless" style="overflow: visible;">
+              <table class="table table-hover table-light">
+                  <thead>
+                      <tr class="uppercase" >
+                          <th> Name </th>
+                          <th class="text-center"> Category</th>
+                          <th class="text-center"> Actions </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <%- if @matched_alliances.present? %>
+                      <%  @matched_alliances.each  do |alliance| %>
+                        <tr>
+                            <td><%= alliance.name %></td>
+                            <td class="text-center"><%= AreaOfInterest.find(alliance.area_of_interest_id).name %></td>
+                            <td class="text-center">
+                              <div class="actions" >
+                                <div class="btn-group">
+                                  <%= link_to 'View', alliance, class:"btn dark btn-outline btn-circle btn-sm" %>
+                                </div>
+                            </div>
+                           </td>
+                        </tr>
+                      <% end %>
+                    <% else %>
+                      <tr class="text-center"><td colspan="3" >Sorry we could not find any Alliances that share your Areas of Interest</td></tr>
+                    <% end %>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+  <!-- END BORDERED TABLE PORTLET-->
+</div>

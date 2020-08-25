@@ -1,0 +1,86 @@
+<div class="top-content">
+  <div class="container" style="background: #a3cbdb; min-height:10vh; padding-top:90px;">
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box" style="padding-bottom: 50px">
+        <%= form_for @ad, url: {action: :update}, html: {id: "payment-form", class: "f1"} do |f| %>
+          <p style="color: red; margin-top:0; margin-bottom:0; font-family: 'Lato'; font-size: 50px; font-weight: 200 !important; text-align:center; text-transform: uppercase;"> Edit Ad</p>
+          <div class="f1-steps" style="margin-top:0">
+            <div class="f1-progress">
+                <div class="f1-progress-line" data-now-value="100" data-number-of-steps="1" style="width: 100%;"></div>
+            </div>
+            <div class="f1-step active" style="width:100%">
+              <div class="f1-step-icon"><i class="fa fa-desktop"></i></div>
+            </div>
+          </div>
+          <h4>Your Ad:</h4>
+
+          <div class="row text-center" style="margin-left:0; margin-right:0">
+            <%= image_tag(@ad.image.try(&:url) || "http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image", style: "max-width:100%") %>
+          </div>
+          <hr />
+          <h4>Region:</h4>
+          <p>
+             Your ad is set up to appear in <strong><%= @ad.region ? "the #{@ad.region.name} region only" : "all regions" %></strong>.
+          </p>
+          <hr />
+          <h4>Status: <em><%= @ad.approval_state.titleize %></em></h4>
+          <% if !@ad.paid? %>
+            <p>
+              Your ad is awaiting payment. Please use the button below to pay and activate your ad.
+            </p>
+          <% elsif @ad.expired? %>
+            <p>
+              Your ad expired on <%= @ad.expiration.to_date %>. Please use the button below to pay and reactivate your ad.
+            </p>
+          <% elsif @ad.approved? %>
+            <p>
+              Your ad expires on <%= @ad.expiration.to_date %>. Please make a payment to renew for an additional month.
+            </p>
+          <% else %>
+            <p>
+              Your ad is currently awaiting approval. Your ad will expire on <%= @ad.expiration.to_date %>.
+            </p>
+          <% end %>
+          <input class="btn btn-dark", style="width:100%; margin-bottom:0" type="submit" value="<%= (@ad.paid? || @ad.approved?) ? 'Renew' : 'Pay Now' %>" />
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :script do %>
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+  <%= javascript_tag do %>
+    $(document).ready(function() {
+      var form = $('#payment-form')
+
+      var handler = StripeCheckout.configure({
+        key: "<%= Rails.configuration.stripe[:publishable_key] %>",
+        image: "https://s3.amazonaws.com/sc-c3/sc-c3-logo-square.png",
+        token: function(token, args) {
+          form.off('submit', submitHandler);
+          form.append($('<input type="hidden" name="stripeToken" />').val(token.id));
+          form.submit();
+        }
+      });
+
+      form.on('submit', submitHandler);
+
+      function submitHandler(e) {
+        e.preventDefault();
+
+        var amount = <%= @ad.monthly_fee %>;
+        var email = '<%= current_user.email %>';
+
+        handler.open({
+          name: 'SC-C3',
+          description: 'SC Christian Chamber of Commerce - Ad Placement',
+          zipCode: true,
+          image: "https://s3.amazonaws.com/sc-c3/sc-c3-logo-square.png",
+          amount: amount,
+          email: email
+        });
+      }
+    });
+  <% end %>
+<% end %>

@@ -1,0 +1,2 @@
+class AreaOfInterestPolicy < ApplicationPolicy
+end

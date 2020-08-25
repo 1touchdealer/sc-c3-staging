@@ -1,0 +1,39 @@
+<!-- begin Content -->
+<section id="business-show" class="section-home" style="min-height:95vh; background: #a3cbdb;">
+  <div class="container show-container">
+    <h2 class="show-title" style="color:white"><%= @business.name %></h2>
+    <section class="show-section">
+      <div class="col-sm-6 col-md-8" style="">
+        <div class="row" style="text-align:center">
+          <%- if @business.logo?%>
+            <%= image_tag @business.logo.url, style: "padding: 30px; width: 90%;" %>
+          <% else %>
+            <img src="//placehold.it/400x300" style= "padding: 30px; width: 90%;">
+          <% end %>
+        </div>
+        <div class="row" style="width:80%; margin-left:10%">
+          <p>
+            <%= @business.description %>
+          </p>
+        </div>
+        <div class="row" style="text-align:center">
+          <%= link_to "Our Website", @business.website_url, class: "btn btn-dark", style: "margin-top: 10px;", :target => "_blank" %>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <h4>Social Media</h4>
+        <ul class="social" style="font-size: .8em;">
+					<li><a href="<%= @business.facebook_url %>" class="facebook"><i class="icon-facebook"></i><span style="font-size:.7em">Follow Us On Facebook</span></a></li>
+					<li><a href="<%= @business.twitter_url %>" class="twitter"><i class="icon-twitter"></i><span style="font-size:.7em">Follow Us On Twitter</span></a></li>
+					<li><a href="<%= @business.gplus_url %>" class="gplus"><i class="icon-gplus"></i><span style="font-size:.7em">Follow Us On GPlus</span></a></li>
+				</ul>
+        <hr />
+        <h4>Categories</h4>
+        <ul class="categories">
+          <li><a href="#"><i class="icon-plus"></i><%= @business.business_category.try(:name) %></a></li>
+				</ul>
+      </div>
+    </section>
+  </div>
+</section>
+<!-- end Content -->

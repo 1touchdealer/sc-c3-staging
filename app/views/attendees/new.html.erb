@@ -1,0 +1,172 @@
+<div class="top-content">
+  <div class="container" style="background: #a3cbdb; min-height:95vh; padding-top:90px;">
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box" style="padding-bottom: 50px">
+        <%= form_for([@event, @attendee], url: {action: "create"}, html: {class: "f1"}) do |f| %>
+          <p style="color: red; margin-top:0; margin-bottom:0; font-family: 'Lato'; font-size: 50px; font-weight: 200 !important; text-align:center; text-transform: uppercase; line-height:1.1"><%= @event.name %></p>
+          <div class="f1-steps" style="margin-top:0">
+            <div class="f1-progress">
+                <div class="f1-progress-line" data-now-value="100" data-number-of-steps="1" style="width: 100%;"></div>
+            </div>
+            <div class="f1-step active" style="width:100%">
+              <div class="f1-step-icon"><i class="fa fa-calendar-plus-o"></i></div>
+            </div>
+          </div>
+          <p class="text-center" style="color:gray; font-size:12px; padding:10px 10px 0 10px; margin-bottom:0">
+            To signup for the event simply enter/verify your email and name, then click attend. If this is a paid event, you will be given the option to pre-pay before you get to the door.
+          </p>
+            <% if @attendee.errors.any? %>
+                <div class="form-group form-md-line-input form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 35px;">
+                  <div class="alert alert-danger">
+                      <% @attendee.errors.each do |attr,msg| %>
+                          <p><%= msg %></p>
+                      <% end %>
+                  </div>
+                </div>
+            <% end %>
+              <% if current_user %>
+                <%= f.hidden_field :user_id %>
+                <div class="form-group form-md-line-input form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 35px;">
+                  <div class="input-icon right">
+                    <%= f.text_field :name, class: 'form-control', value: current_user.name, disabled: true %>
+                    <%= f.label :name %>
+                    <span class="help-block">Your name. ex: John Smith</span>
+                  </div>
+                </div>
+                <div class="form-group form-md-line-input form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 35px;">
+                  <div class="input-icon right">
+                    <%= f.text_field :email, class: 'form-control', value: current_user.email, disabled: true%>
+                    <%= f.label :email %>
+                    <span class="help-block">Your email</span>
+                  </div>
+                </div>
+              <% else %>
+                <div class="form-group form-md-line-input form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 35px;">
+                  <div class="input-icon right">
+                    <%= f.label :name %>
+                    <%= f.text_field :name, class: 'form-control', required: true %>
+                    <span class="help-block">Your name. ex: John Smith</span>
+                  </div>
+                </div>
+                <div class="form-group form-md-line-input form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 35px;">
+                  <div class="input-icon right">
+                    <%= f.label :email %>
+                    <%= f.text_field :email, class: 'form-control', required: true, email: true %>
+                    <span class="help-block">Your email</span>
+                  </div>
+                </div>
+              <% end %>
+
+              <button id="add-attendee" class="btn btn-success" style="margin: 30px 0 10px;">
+                <span class="fa fa-plus-circle"></span> Add attendee
+              </button>
+
+              <% if @event.attendance_levels.present? %>
+                <div class="form-group form-md-line-input dropdown-input-field" style="padding-bottom: 0px; margin-bottom:0; margin-top:20px !important">
+                  <%= f.collection_select :attendance_level_id, @event.try(:attendance_levels), :id, :name_with_cost, {prompt: false, include_blank: false}, class: 'form-control select2' %>
+                  <%= f.label 'Attendance Type', for: :attendence_level_id %>
+                </div>
+                <button id="stripe-contribute-button" class="btn btn-dark" style="width:100%; margin-bottom:0">Attend <span style="font-weight:200"> and </span> Pay Now</button>
+                <p style="font-family: 'Lato'; font-size: 18px; font-weight: 300 !important; text-align: center; text-transform: uppercase; margin:5px;">
+                  - or -
+                </p>
+              <% end %>
+
+              <button id="attend-no-pay-button" class="btn btn-dark" style="width:100%; margin:0">Attend<span style="font-weight:200"> and </span>Pay Later</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<template id="attendee-template" style="display: none;">-->
+  <div class="form-group form-md-line-input form-md-floating-label js-counter template" style="padding-bottom: 0px; margin-bottom:0; padding-top: 35px; display: none;">
+    <hr>
+    <button class="btn btn-xs btn-danger remove-invite" style="position: absolute; right:0; z-index: 9999;">&times;</button>
+    <div class="input-icon right">
+      <label style="color: #888; top: 0; font-size: 13px;">Name</label>
+      <input type="text" class="form-control" name="attendee[][]" required>
+      <span class="help-block">Your name. ex: John Smith</span>
+    </div>
+  </div>
+<!--</template>-->
+
+
+<% content_for :script do %>
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+  <%= javascript_tag do %>
+    $(document).ready(function() {
+      var form = $('#new_attendee');
+
+      var handler = StripeCheckout.configure({
+        key: "<%= Rails.configuration.stripe[:publishable_key] %>",
+        image: "https://s3.amazonaws.com/sc-c3/sc-c3-logo-square.png",
+        token: function(token, args) {
+          form.off('submit', submitHandler);
+          form.append($('<input type="hidden" name="stripeToken" />').val(token.id));
+          form.submit();
+        }
+      });
+
+      $( "#stripe-contribute-button" ).click(function() {
+        form.on('submit', submitHandler);
+        form.submit();
+      });
+
+      $( "#attend-no-pay-button").click(function(){
+        form.off('submit', submitHandler);
+        form.submit();
+      });
+
+      $('#add-attendee').click(function(e) {
+        e.preventDefault();
+        var new_field = $('.form-group.template').clone().removeClass('template');
+        var count_elem = $('.js-counter').length;
+        $(new_field).find('input[type="text"]').attr('id', 'attendee_invitee_' + count_elem).attr('name', 'attendee[invitees_attributes][' + count_elem + '][name]');
+        $(new_field).find('label').attr('for', 'attendee_invitee_' + count_elem);
+        $(new_field).find('.remove-invite').click(function(e) {
+            e.preventDefault();
+            $(this).parent().remove();
+        });
+        $(new_field).show().insertBefore($(this));
+      });
+
+      function submitHandler(e) {
+        e.preventDefault();
+
+        var form = $('#new_attendee');
+
+        form.validate({
+          errorElement: "span",
+          errorClass: "help-block help-block-error",
+          errorPlacement: function(e, r) {
+            r.is(":checkbox") ? e.insertAfter(r.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline")) : r.is(":radio") ? e.insertAfter(r.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline")) : e.insertAfter(r)
+          },
+          highlight: function(e) {
+            $(e).closest(".form-group").addClass("has-error")
+          },
+          unhighlight: function(e) {
+            $(e).closest(".form-group").removeClass("has-error")
+          },
+          success: function(e) {
+            e.closest(".form-group").removeClass("has-error")
+          }
+        });
+
+        if (form.valid()) {
+          var amount = "";
+          var email = $('#attendee_email').val();
+
+          handler.open({
+            name: 'SC-C3',
+            description: 'Event Registration:  <%= @event.name %>',
+            zipCode: true,
+            image: "https://s3.amazonaws.com/sc-c3/sc-c3-logo-square.png",
+            amount: amount,
+            email: email
+          });
+        }
+      }
+    });
+  <% end %>
+<% end %>

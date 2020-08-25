@@ -1,0 +1,37 @@
+<!-- begin Calendar -->
+<article class="news-timeline" id="calendar">
+  <div class="container">
+    <h2>Calendar</h2>
+    <h3>Stay up to date on future events.</h3>
+
+    <div class="timeline">
+
+      <% @events.each do |month, events| %>
+        <div class="date-separator"> <span><%= month %></span> </div>
+
+        <ul class="columns">
+          <% events.each do |event| %>
+            <li>
+              <%= link_to event_path(event), class: "timeline-item" do %>
+                <h5><%= event.name %></h5>
+                <% if event.image.present? %>
+                  <figure><%= image_tag(event.image.url, style: "max-height:200px; object-fit:contain;") %></figure>
+                <% end %>
+                <ul class="foot">
+                  <!-- <% if event.user.present? %>
+                    <li><i class="icon-pencil"></i> By <%= event.user.try :name %> </li>
+                  <% end %> -->
+                  <li><i class="icon-clock"></i> <%= event.start.strftime '%b %e %Y | %l:%M%P' %> </li>
+                </ul>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+    <div class="row text-center">
+      <%= link_to 'View All', calendar_path, class: "btn btn-dark"%>
+    </div>
+  </div>
+</article>
+<!-- end Calendar -->

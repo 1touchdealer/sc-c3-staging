@@ -1,0 +1,74 @@
+<div class="top-content">
+  <div class="container" style="background: #a3cbdb; min-height:95vh; padding-top:90px;">
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box" style="padding-bottom: 50px">
+        <%= form_for @contact, :html => {:class => 'form-horizontal', class: "f1" } do |f| %>
+
+          <!-- Form Title -->
+          <p style="color: red; margin-top:0; margin-bottom:0; font-family: 'Lato'; font-size: 50px; font-weight: 200 !important; text-align:center; text-transform: uppercase; line-height:1.1">Contact Us</p>
+
+          <!-- Progress Image -->
+          <div class="f1-steps" style="margin-top:0">
+            <div class="f1-progress">
+                <div class="f1-progress-line" data-now-value="100" data-number-of-steps="1" style="width: 100%;"></div>
+            </div>
+            <div class="f1-step active" style="width:100%">
+              <div class="f1-step-icon"><i class="fa fa-envelope-o"></i></div>
+            </div>
+          </div>
+
+          <!-- Prompt for form -->
+          <p class="text-center" style="color:gray; font-size:12px; padding:10px 10px 0 10px; margin-bottom:0">
+            Please feel free to send us any questions or concerns you may have for the South Carolina Christian Chamber of Commerce. We will get back to you as soon as we can!
+          </p>
+
+          <!-- Name -->
+          <div class="form-group form-md-line-input  form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0;">
+            <div class="input-icon right">
+              <%= f.text_field :name, class: "form-control", required: true %>
+              <%= f.label :name %>
+              <span class="help-block">Your name. ex: John Smith</span>
+              <i class="fa fa-user"></i>
+            </div>
+            <% if @contact.errors.include? :name %>
+              <span style="color: #a94442"><%= @contact.errors[:name].join(', ') %></span>
+            <% end %>
+          </div>
+
+          <!-- Email Field -->
+          <div class="form-group form-md-line-input  form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 40px !important;">
+            <div class="input-icon right">
+              <%= f.email_field :email, class: "form-control", email: true, required: true %>
+              <%= f.label :email %>
+              <span class="help-block" >Email for us to reply</span>
+              <i class="fa fa-envelope-o"></i>
+            </div>
+            <% if @contact.errors.include? :email %>
+              <span style="color: #a94442"><%= @contact.errors[:email].join(', ') %></span>
+            <% end %>
+          </div>
+
+          <!-- Message Field -->
+          <div class="form-group form-md-line-input form-md-floating-label" style="margin-top:15px;">
+            <%= f.text_area :message, class: 'form-control', rows: 3, required: true %>
+            <%= f.label :message, for: :message %>
+          </div>
+          <div class="form-group form-md-line-input form-md-floating-label js-counter template" style="padding-bottom: 0px; margin-bottom:0; padding-top: 40px !important; display: none;">
+            <hr>
+            <div class="input-icon right">
+              <label style="color: #888; top: 0; font-size: 13px;">Name</label>
+              <input type="text" class="form-control" name="name" required>
+              <span class="help-block">Your name. ex: John Smith</span>
+            </div>
+            <% if @contact.errors.include? :message %>
+              <span style="color: #a94442"><%= @contact.errors[:message].join(', ') %></span>
+            <% end %>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn btn-dark btn-submit" style="margin-bottom:0; width: 100%; text-align:center; padding:10px;">Send Message</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

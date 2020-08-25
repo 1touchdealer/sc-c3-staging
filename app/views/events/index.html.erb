@@ -1,0 +1,69 @@
+<!-- begin Content -->
+<section id="calendar-content" class="section-home" style="min-height:95vh; background: #a3cbdb">
+  <div class="container" style="height: 80%; width: 95%; padding-top: 70px;">
+    <h2 class="show-title" style="color: white; margin-bottom:0">Calendar</h2>
+    <p class="text-center" style="font-family: Lato; font-weight: 300; color:#3e454c; margin-bottom:10px; font-size:16px">
+      <%= @region.name if @region.present? %>
+    </p>
+    <section style="background: white; ; padding:0; border-radius: 5px; margin-bottom: 4vh;">
+      <div class="col-sm-8">
+        <%= month_calendar(attribute: :start, events: @events) do |date, events| %>
+          <%= date.day %>
+          <!-- <% events.each do |event| %>
+          <% end %> -->
+        <% end %>
+        <div class="row events-btn">
+          <div class="dropup" id="divDropup">
+            <button class="btn btn-default dropdown-toggle btn-calendar-control" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Change Region
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" style="background:white !important; width: 80%;">
+              <% Region.all.each do |region| %>
+                <%= link_to calendar_path(request.query_parameters.merge({:region_search => region.id})) do %>
+                <li>
+                    <%= region.name %>
+                </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+          <%= link_to "Submit Event", new_event_path, class: "btn btn-default btn-hover-red btn-calendar-control", style: "width:100%; background: #212121; color: white;" if current_user.present?%>
+        </div>
+      </div>
+      <div class="col-sm-4" style="min-height:60vh; background: #3e454c">
+        <h2 style="font-size:24px; font-weight:200; color:white; margin-top:0; padding-top:4vh; padding-bottom: 2vh;">Events This Month</h2>
+          <%- if @events_this_month.present? %>
+            <% @events_this_month.each do |event| %>
+              <div class="row" style="margin-bottom: 15px; margin-left:0; margin-right:0; border-bottom: 1px solid #a7a7a7; padding-bottom: 14px;">
+                <%= link_to event do %>
+                <div class="col-xs-3" style=" color:white; line-height: 16px; padding-left:0; padding-right:0; text-align:center">
+                  <div class="row" style="margin-left:0; margin-right:0; color: white">
+                    <span class="fa-stack">
+                      <i class="fa fa-calendar-o fa-stack-2x"></i>
+                      <strong class="fa-stack-1x" style="margin-top: .3em"><%= event.start.strftime("%d") %></strong>
+                    </span>
+                  </div>
+                  <div class="row" style="text-transform:uppercase; font-size:12px">
+                    <%= event.start.strftime("%a") %>
+                  </div>
+                </div>
+                <div class="col-xs-9" style="padding-left: 5px">
+                  <h5 style="margin-top:0; font-family: 'Lato'; font-size:14px; color:white; font-weight: 300 "><%= event.name %></h5>
+                  <p style="margin-bottom:0; font-size:12px; color:white">
+                    @<%= event.start.strftime("%I:%M %p") %>
+                  </p>
+                </div>
+                <% end %>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="row" style="text-align:center">
+              <h5 style="margin-top:0; font-family: 'Lato'; font-size:14px; color:white; font-weight: 300 ">No Events</h5>
+            </div>
+          <% end %>
+      </div>
+    </section>
+  </div>
+</section>
+<!-- end Content -->

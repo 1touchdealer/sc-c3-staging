@@ -1,0 +1,70 @@
+<div id="dashboard-container" class="container" style="background: #a3cbdb; min-height:100vh">
+  <div class="row" style="margin-left:0; margin-right:0; margin-bottom:15px;">
+    <h2 class="page-title" style=""> <%= @business.name %></h2>
+    <small style="padding-left: 15px;"><%= @business.created_at.strftime("Member Since: %m/%d/%Y") %></small>
+  </div>
+  <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat dashboard-stat-v2" style="background: #455A64; color: white; border: 1px solid white;">
+            <div class="visual" style="opacity: .1;">
+                <i class="fa fa-users"></i>
+            </div>
+            <div class="details" style="">
+                <div class="number">
+                    <span data-counter="counterup" data-value="12,5"><%= @business.users.count %></span> </div>
+                <div class="desc"> Members </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+          <div class="dashboard-stat dashboard-stat-v2" style="background: #0A5B8D; color: white; border: 1px solid white;">
+              <div class="visual" style="opacity: .1;">
+                  <i class="fa fa-gift"></i>
+              </div>
+              <div class="details" style="">
+                  <div class="number">
+                      <span data-counter="counterup" data-value="12,5"><%= @inkind_donations.count  %></span> </div>
+                  <div class="desc"> In-Kind Donations </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+          <div class="dashboard-stat dashboard-stat-v2 green" style="background:#3cc05f; border: 1px solid white;">
+              <div class="visual">
+                  <i class="fa fa-support"></i>
+              </div>
+              <div class="details">
+                  <div class="number">
+                      <span data-counter="counterup" data-value="549"><%= number_to_currency(number_to_human(@campaign_donations.sum(:donation_amount), units: {unit: "", thousand: "K", million: "M"})) %></span>
+                  </div>
+                  <div class="desc"> Campaign Donations </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+          <div class="dashboard-stat dashboard-stat-v2 purple" style="border: 1px solid white;">
+              <div class="visual">
+                  <i class="fa fa-money"></i>
+              </div>
+              <div class="details">
+                  <div class="number">
+                      <span data-counter="counterup" data-value="89"><%= number_to_currency(number_to_human(@charitable_donations.sum(:donation_amount), units: {unit: "", thousand: "K", million: "M"})) %></span></div>
+                  <div class="desc"> Charitable Donations </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <%= render "users/dashboard/partials/member/local_campaigns" %>
+  <%= render "users/dashboard/partials/alliance/your_campaigns" %>
+  <%= render "users/dashboard/partials/alliance/campaign_inkind_donations" %>
+  <%= render "users/dashboard/partials/business/your_campaigns" %>
+  <%= render "users/dashboard/partials/business/charity_donations" %>
+  <%= render "users/dashboard/partials/business/in_kind_donations" %>
+  <%= render "users/dashboard/partials/business/your_members" %>
+  <%= render "users/dashboard/partials/business/ads" %>
+  <% if @is_owner %>
+    <%= render "users/dashboard/partials/business/helpful_links" %>
+    <%= render "users/dashboard/partials/business/account_info" %>
+  <% end %>
+
+</div>

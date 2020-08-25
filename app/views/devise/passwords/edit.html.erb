@@ -1,0 +1,34 @@
+<div class="row" style="background: #a3cbdb; margin: 0 auto; min-height: 100vh;">
+  <div class="portlet light " id="form_wizard_1" style="width: 80%; margin: 0 auto; margin-top: 95px; border: 1px solid black; margin-bottom: 20px; background: rgba(256,256,256,.85);border-radius: 5px !important;">
+      <div class="portlet-body form">
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+          <%= devise_error_messages! %>
+          <%= f.hidden_field :reset_password_token %>
+          <div class="form-body" style="padding-top:0">
+            <div class="row" style="margin-left: 15px; margin-right: 15px;">
+              <div class="col-sm-12" style="padding:10px">
+                  <h2 class="text-center" style="font-family: 'Lato'; font-size: 38px; font-weight: 300;">Change Your Password</h2>
+                  <div class="form-group form-md-line-input form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 32px;">
+                    <div class="input-icon right">
+                      <%= f.password_field :password, autofocus: true, class: 'form-control', autocomplete: "off" %>
+                      <%= f.label :password, 'New Password', for: 'form_control_1' %>
+                      <i class="fa fa-unlock-alt"></i>
+                    </div>
+                  </div>
+                  <!-- <div class="form-group form-md-line-input form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 32px;">
+                    <div class="input-icon right">
+                      <%= f.password_field :password_confirmation, autofocus: true, class: 'form-control', autocomplete: "off" %>
+                      <%= f.label :password_confirmation, for: 'form_control_1' %>
+                      <i class="fa fa-lock"></i>
+                    </div>
+                  </div> -->
+                  <div class="row" style="text-align:center; margin:0;">
+                    <%= f.submit 'Change My Password', class: "btn btn-dark btn-submit", style: "margin-bottom:0; width: 100%; text-align:center; padding:10px;" %>
+                  </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>

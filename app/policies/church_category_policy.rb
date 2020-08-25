@@ -1,0 +1,2 @@
+class ChurchCategoryPolicy < ApplicationPolicy
+end

@@ -1,0 +1,114 @@
+/*******************************  $Buttons  ********************************/
+.btn {
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+.btn.btn-default{
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    box-sizing: border-box;
+    color: #66808c;
+    font-family: "Lato";
+    font-size: 16px;
+    background-color: #f2f4f7;
+    width: 157px;
+}
+.btn.btn-donation {
+  background-color: #ea4b4f;
+  border: 2px solid transparent;
+  display: inline-block;
+  margin: 50px 15px;
+  padding: 5px 20px;
+}
+.btn.btn-donation:before {
+  display: none;
+}
+.btn.btn-donation:hover {
+  background-color: transparent;
+  border-color: #ea4b4f;
+  color: #ea4b4f;
+}
+.btn.btn-dark,
+.btn.btn-light,
+.btn.btn-slider {
+  background-color: #061626;
+  border: 2px solid transparent;
+  border: 5px solid transparent;
+  color: #fff;
+  display: inline-block;
+  font-size: 1em;
+  font-weight: 700;
+  margin: 30px 0;
+  padding: 10px 40px;
+  text-align: center;
+}
+.btn.btn-dark:hover,
+.btn.btn-slider:hover {
+  background-color: transparent;
+  border-color: #EA4B4F;
+  color: #EA4B4F;
+}
+.btn.btn-slider {
+  font-size: 24px;
+  margin-top: 50px;
+  padding: 20px 40px;
+}
+.btn.btn-light {
+  background-color: buttonface;
+  color: #66808c;
+}
+.btn.btn-light:hover {
+  background-color: #86909c;
+  color: #333333;
+}
+.btn.btn-form {
+  background-color: #51bba5;
+  border: 2px solid transparent;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: 700;
+  margin-top: -20px;
+  padding: 15px 40px;
+}
+.btn.btn-form:hover {
+  background-color: transparent;
+  border-color: #51bba5;
+  color: #51bba5;
+}
+.btn.btn-read-more {
+  background-color: #c6d9df;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  color: #fff;
+  padding: 7px 20px;
+}
+.btn.btn-read-more:hover {
+  background-color: #56b7a3;
+}
+
+/*Update credit card css*/ 
+.card-form{
+  overflow: hidden;
+}
+.btns-container {
+  margin-top:15px; 
+}
+.border-radius {
+  border-radius: 4px !important;
+}
+.mr-10 {
+  margin-right: 10px;
+}

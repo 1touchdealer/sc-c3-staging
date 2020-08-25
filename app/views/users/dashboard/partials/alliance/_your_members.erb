@@ -1,0 +1,54 @@
+<div class="col-sm-12 chop">
+  <!-- BEGIN BORDERED TABLE PORTLET-->
+  <div class="portlet light portlet-fit ">
+      <div class="portlet-title">
+          <div class="caption">
+              <span class="caption-subject sbold uppercase">
+                <%= @is_owner ? 'Your' : @prefix %> Members
+              </span>
+          </div>
+          <!-- <div class="actions">
+             <div class="btn-group btn-group-devided">
+               <%= link_to "Send Invite", campaigns_path, class: "btn btn-sm active btn-blue" %>
+             </div>
+         </div> -->
+
+      </div>
+      <div class="portlet-body">
+          <div class="table-scrollable table-scrollable-borderless" style="overflow: visible;">
+              <table class="table table-hover table-light">
+                  <thead>
+                      <tr class="uppercase" >
+                          <th>#</th>
+                          <th> Name </th>
+                          <th> Email</th>
+                          <th class="text-center"> Joined </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <%- unless @alliance.users.all.present? %>
+                      <tr class="text-center">
+                        <td colspan="4" >
+                          <% if @is_owner %>
+                              Sorry you have 0 Members
+                          <% else %>
+                              Sorry <%= @prefix %> has 0 Members
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                    <%  @alliance.users.all.each_with_index  do |user, i| %>
+                      <tr>
+                          <td><%= i+1 %></td>
+                          <td><%= user.name %></td>
+                          <td><%= user.email %></td>
+                          <td class="text-center"><%= distance_of_time_in_words(Time.now, user.created_at) %></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+  <!-- END BORDERED TABLE PORTLET-->
+</div>

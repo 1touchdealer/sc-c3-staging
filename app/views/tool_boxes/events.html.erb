@@ -1,0 +1,40 @@
+<article class="tool-box" id="tool-box">
+  <div class="container">
+    <h2>Events</h2>
+    <h3 style="padding-bottom:30px">Checkout videos of past events and speakers</h3>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <%- if @events.present? %>
+          <% @events.each do |resource| %>
+            <div class="col-lg-4 col-sm-6">
+              <div class="donation-item", style: "text-decoration: none; border-radius: 8px;">
+                <figure>
+                  <%- if resource.image?%>
+                    <%= image_tag resource.image.url, class:"landing-page-campaign-image", style: "border-radius: 8px 8px 0 0; object-fit: cover;"%>
+                  <% else %>
+                    <img src="//placehold.it/400x300" class="landing-page-campaign-image" style="border-radius: 8px 8px 0 0; object-fit: cover;">
+                  <% end %>
+                </figure>
+                <div class="content landing-page-campaign-content" style="height: 100%; border-bottom:0">
+                  <h4 style="padding-top:15px;"><%= resource.title %></h4>
+                </div>
+                <div class="foot" style="padding-bottom:0px">
+                  <p>
+                    <a href="<%= resource.link %>"><%= resource.link %></a>
+                  </p>
+                </div>
+            </div>
+          </div>
+          <% end %>
+        <% else %>
+            <div class="col-xs-8 col-xs-offset-2 text-center" style="background: white; padding: 20px; margin-top:5vh; border-radius:5px">
+              <h3 style="font-family: 'Lato'; font-weight:300; text-transform:uppercase; margin-top: 20px; text-align:center">No Events Found</h3>
+              <%= link_to 'Refresh Search Results', tool_box_events_url, class: "btn btn-dark" %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</article>

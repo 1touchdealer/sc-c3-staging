@@ -1,0 +1,65 @@
+<div class="col-sm-12 chop">
+  <!-- BEGIN BORDERED TABLE PORTLET-->
+  <div class="portlet light portlet-fit ">
+      <div class="portlet-title">
+        <% if @is_owner %>
+          <div class="caption">
+            <span class="caption-subject sbold uppercase">Your Fundraisers</span>
+          </div>
+          <div class="actions">
+             <div class="btn-group btn-group-devided">
+               <%= link_to "Submit New", new_campaign_path, class: "btn btn-sm active btn-blue" %>
+             </div>
+         </div>
+        <% else %>
+            <div class="caption">
+              <span class="caption-subject sbold uppercase"><%= @prefix %> Fundraisers</span>
+            </div>
+        <% end %>
+
+      </div>
+      <div class="portlet-body">
+          <div class="table-scrollable table-scrollable-borderless" style="overflow: visible;">
+              <table class="table table-hover table-light">
+                  <thead>
+                      <tr class="uppercase" >
+                          <th> Name </th>
+                          <th class="text-center"> Goal</th>
+                          <th class="text-center"> Age </th>
+                          <th class="text-center"> Actions </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <% if @active_campaigns.present? %>
+                      <% @active_campaigns.each do |campaign| %>
+                        <tr>
+                            <td><%= campaign.name %></td>
+                            <td class="text-center"><%= number_to_currency(campaign.goal_amount) %></td>
+                            <td class="text-center"><%= distance_of_time_in_words(Time.now, campaign.created_at) %></td>
+                            <td class="text-center">
+                              <div class="actions" class="text-center">
+                                <div class="btn-group">
+                                  <%= link_to 'View', campaign, class:"btn dark btn-outline btn-circle btn-sm" %>
+                                </div>
+                            </div>
+                           </td>
+                        </tr>
+                      <% end %>
+                    <% else %>
+                      <tr class="text-center">
+                        <td colspan="4" >
+                          <% if @is_owner %>
+                              You have created 0 Fundraisers
+                          <% else %>
+                              <%= @prefix %> has created 0 Fundraisers
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+  <!-- END BORDERED TABLE PORTLET-->
+</div>

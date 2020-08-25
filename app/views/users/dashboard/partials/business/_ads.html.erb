@@ -1,0 +1,62 @@
+<div class="col-sm-12 chop">
+  <!-- BEGIN BORDERED TABLE PORTLET-->
+  <div class="portlet light portlet-fit ">
+      <div class="portlet-title">
+          <div class="caption">
+              <span class="caption-subject sbold uppercase">
+                <%= @is_owner ? 'Your' : @prefix %> Ads
+              </span>
+          </div>
+      </div>
+      <div class="portlet-body">
+          <div class="table-scrollable table-scrollable-borderless" style="overflow: visible;">
+              <table class="table table-hover table-light">
+                  <thead>
+                      <tr class="uppercase" >
+                          <th>#</th>
+                          <th> Ad </th>
+                          <th> Status </th>
+                          <th> Expires </th>
+                          <th class="text-center"> Action </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <%- unless current_user.ads.exists? %>
+                      <tr class="text-center">
+                        <td colspan="5" >
+                          <% if @is_owner %>
+                              You have not yet created an Ad
+                          <% else %>
+                              <%= @prefix %> has not yet created an Ad
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                    <%  current_user.ads.each_with_index  do |ad, i| %>
+                      <tr>
+                          <td><%= i+1 %></td>
+                          <td><%= image_tag ad.image.url(:thumb) %></td>
+                          <td><%= ad.approval_state.slice(0,1).capitalize + ad.approval_state.slice(1..-1) %></td>
+                          <% if (ad.paid? || ad.approved?) %>
+                            <!-- <td><i class="fa fa-check font-green-sharp"></i> Active</td> -->
+                            <td><%= ad.expiration.strftime('%-m/%-d/%y') rescue '' %></td>
+                            <td class="text-center">
+                              <%= link_to "Edit", edit_ad_path(ad), class: 'btn btn-sm active btn-blue' %>
+                            </td>
+
+                          <% else %>
+                            <!-- <td><i class="fa fa-times font-red-mint"></i> Inactive</td> -->
+                            <td></td>
+                            <td class="text-center">
+                              <%= link_to "Activate", edit_ad_path(ad), class: 'btn btn-sm active btn-blue' %>
+                            </td>
+                          <% end %>
+                      </tr>
+                    <% end %>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+  <!-- END BORDERED TABLE PORTLET-->
+</div>

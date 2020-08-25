@@ -1,0 +1,103 @@
+<div class="top-content">
+  <div class="container" style="background: #a3cbdb; min-height:95vh; padding-top:90px;">
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box" style="padding-bottom: 50px">
+        <%= form_for(@chamber_donation, url: {action: "create"}, html: {id: "charitable-donation-form", class: "f1"}) do |f| %>
+          <p style="color: red; margin-top:0; margin-bottom:0; font-family: 'Lato'; font-size: 50px; font-weight: 200 !important; text-align:center; text-transform: uppercase;">SC Christian Chamber of Commerce</p>
+          <div class="f1-steps" style="margin-top:0">
+            <div class="f1-progress">
+                <div class="f1-progress-line" data-now-value="100" data-number-of-steps="1" style="width: 100%;"></div>
+            </div>
+            <div class="f1-step active" style="width:100%">
+              <div class="f1-step-icon"><i class="fa fa-usd"></i></div>
+            </div>
+          </div>
+          <p class="text-center" style="color:gray; font-size:12px; padding:0 15px;">
+            Thanks for submitting a donation. Please allow 24hrs for your card to be processed.
+          </p>
+
+          <% if current_user.present? %>
+            <%= f.hidden_field :user_id, value: current_user.id %>
+            <%= f.hidden_field :email, value: current_user.email %>
+          <% else %>
+            <div class="form-group form-md-line-input step-form-confirmation-form">
+                <%= f.email_field :email, class: "form-control", placeholder: "Enter your email" %>
+                <label for="form_control_1">Your Email</label>
+                <div class="input-icon right">
+                    <i class="fa fa-pencil"></i>
+                </div>
+            </div>
+          <% end %>
+
+          <div class="form-group form-md-line-input step-form-confirmation-form" >
+            <label for="form_control_1" style="margin-left:-15px">Donation Amount</label>
+            <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <%= f.number_field :donation_amount, min: 1, class: "form-control", placeholder: "Enter Amount..", required: true%>
+                <div class="form-control-focus"> </div>
+                <span class="input-group-addon">.00</span>
+            </div>
+          </div>
+          <button id="stripe-contribute-button" class="btn btn-dark" style="width:100%; marking-bottom:0">Contribute!</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :script do %>
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+  <%= javascript_tag do %>
+    $(document).ready(function() {
+      var form = $('#charitable-donation-form');
+
+      var handler = StripeCheckout.configure({
+        key: "<%= Rails.configuration.stripe[:publishable_key] %>",
+        image: "https://s3.amazonaws.com/sc-c3/sc-c3-logo-square.png",
+        token: function(token, args) {
+          form.off('submit', submitHandler);
+          form.append($('<input type="hidden" name="stripeToken" />').val(token.id));
+          form.submit();
+        }
+      });
+
+      form.on('submit', submitHandler);
+
+      function submitHandler(e) {
+        e.preventDefault();
+
+        var form = $('#charitable-donation-form');
+        form.validate({
+          errorElement: "span",
+          errorClass: "help-block help-block-error",
+          errorPlacement: function(e, r) {
+            r.is(":checkbox") ? e.insertAfter(r.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline")) : r.is(":radio") ? e.insertAfter(r.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline")) : e.insertAfter(r)
+          },
+          highlight: function(e) {
+            $(e).closest(".form-group").addClass("has-error")
+          },
+          unhighlight: function(e) {
+            $(e).closest(".form-group").removeClass("has-error")
+          },
+          success: function(e) {
+            e.closest(".form-group").removeClass("has-error")
+          }
+        });
+
+        if (form.valid()) {
+          var amount = $('#charitable_donation_donation_amount').val() * 100;
+          var email = $('#chamber_donation_email').val()
+
+          handler.open({
+            name: 'SC-C3',
+            description: 'Donation to SC Christian Chamber of Commerce',
+            zipCode: true,
+            image: "https://s3.amazonaws.com/sc-c3/sc-c3-logo-square.png",
+            amount: amount,
+            email: email
+          });
+        }
+      }
+    });
+  <% end %>
+<% end %>

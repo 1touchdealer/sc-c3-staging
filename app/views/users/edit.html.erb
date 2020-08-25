@@ -1,0 +1,106 @@
+<div class="top-content">
+  <div class="container" style="background: #a3cbdb; width:100%; min-height:100vh; padding-top:100px;">
+    <p style="margin-top:0; font-family: 'Lato'; font-size: 50px; font-weight: 300 !important; text-align:center; text-transform: uppercase; font-weight:500">Edit Account</p>
+    <!-- <p style="margin-top:0; text-align:center; font-variant: small-caps; font-weight:300; font-size: 20px">edit account</p> -->
+      <div class="row">
+          <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box" style="padding-bottom: 50px">
+          	<%= form_for(@user, url: user_path(@user), html: { method: :put, class: 'f1'}) do |f| %>
+          		<div class="f1-steps">
+          			<div class="f1-progress">
+          			    <div class="f1-progress-line" data-now-value="12" data-number-of-steps="1" style="width: 100%;"></div>
+          			</div>
+          			<div class="f1-step active" style="width:100%">
+          				<div class="f1-step-icon"><i class="fa fa-user"></i></div>
+          				<!-- <p style="margin-top:8px">Account</p> -->
+          			</div>
+          		</div>
+
+              <% unless current_user.stripe_user_id.present? %>
+                <hr />
+                <h4 style="color: #26344b; margin-bottom:0; font-family:'Lato'; text-transform:uppercase; text-align:center; font-weight:300;">Connect For Receiving Donations</h4>
+                <p class="text-center" style="margin-top: 20px; font-weight: 300; margin-bottom: 0;">
+                  If you are creating a Campaign please connect with Stripe and then you will be re-directed to the Create Campaign Page
+                </p>
+                <div class="text-center" style="padding-top:20px">
+                  <a href="<%= "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=#{ENV['STRIPE_CONNECT_CLIENT_ID']}&redirect_uri=#{ENV['STRIPE_CONNECT_REDIRECT_URI']}"%>&scope=read_write" class="stripe-connect"><span>Connect with Stripe</span></a>
+                </div>
+                <hr />
+              <% end %>
+
+              <h4 style="color: #26344b; margin-bottom:0; font-family:'Lato'; text-transform:uppercase; text-align:center; font-weight:300;">Basic Info</h4>
+
+              <div class="form-group form-md-line-input  form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 35px;">
+                <div class="input-icon right">
+                    <%= f.text_field :name, class: "form-control" %>
+                    <%= f.label :name %>
+                    <!-- <span class="help-block">Your name. ex: John Smith</span> -->
+                    <i class="fa fa-user"></i>
+                </div>
+              </div>
+              <div class="form-group form-md-line-input  form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 35px;">
+                <div class="input-icon right">
+                    <%= f.email_field :email, class: "form-control" %>
+                    <%= f.label :email %>
+                    <!-- <span class="help-block" >Email for login...</span> -->
+                    <i class="fa fa-envelope-o"></i>
+                </div>
+              </div>
+              <div class="form-group form-md-line-input  form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 35px;">
+                <div class="input-icon right">
+                    <%= f.text_field :address_line1, class: "form-control autocomplete-address", placeholder: "" %>
+                    <%= f.label :address %>
+                    <!-- <span class="help-block" >Email for login...</span> -->
+                    <i class="fa fa-address-book"></i>
+                </div>
+              </div>
+              <hr />
+              <h4 style="color: #26344b; margin-bottom:0; font-family:'Lato'; text-transform:uppercase; text-align:center; font-weight:300;">Associations</h4>
+              <div class="form-group form-md-line-input" style="padding-bottom: 0px; margin-bottom:0; padding-top: 40px;">
+                <%= f.label :region_id, style: "color: #888;" %>
+                <%= f.collection_select :region_id, Region.order(:name), :id, :name, {prompt: true}, {class: 'select-church-category', style: 'margin-top: 10px;'} %>
+              </div>
+              <div class="form-group form-md-line-input" style="padding-bottom: 0px; margin-bottom:0; padding-top: 25px; margin-top: 15px;">
+                <%= f.collection_select :area_of_interest_ids, AreaOfInterest.order(:name), :id, :name, {prompt: true}, {multiple: true, class: 'form-control select-area-of-interest', style: 'margin-top: 10px;'} %>
+                <%= f.label :areas_of_interest, for: :area_of_interest_ids %>
+              </div>
+              <div class="form-group form-md-line-input" style="padding-bottom: 0px; margin-bottom:0; padding-top: 15px;">
+                <%= f.label :church_id, style: "color: #888;" %>
+                <%= f.collection_select :church_id, Church.order(:name), :id, :name, {prompt: true}, {class: 'select-church-category', style: 'margin-top: 10px;'} %>
+              </div>
+              <div class="form-group form-md-line-input" style="padding-bottom: 0px; margin-bottom:0; padding-top: 15px;">
+                <%= f.label :business_id, style: "color: #888;" %>
+                <%= f.collection_select :business_id, Business.order(:name), :id, :name, {prompt: true}, {class: 'select-church-category', style: 'margin-top: 10px;'} %>
+              </div>
+              <div class="form-group form-md-line-input" style="padding-bottom: 0px; margin-bottom:0; padding-top: 15px;">
+                <%= f.label :alliance_id, style: "color: #888;" %>
+                <%= f.collection_select :alliance_id, Alliance.order(:name), :id, :name, {prompt: true}, {class: 'select-church-category', style: 'margin-top: 10px;'} %>
+              </div>
+
+              <hr />
+              <h4 style="color: #26344b; margin-bottom:0; font-family:'Lato'; text-transform:uppercase; text-align:center; font-weight:300;">Change Password</h4>
+              <div class="form-group form-md-line-input  form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 35px; padding-bottom:20px">
+                <div class="input-icon right">
+                    <%= f.password_field :password, class: "form-control", autocomplete: "off"%>
+                    <%= f.label :password, "New Password" %>
+                    <span class="help-block">Must be at least 6 characters</span>
+                    <i class="fa fa-unlock-alt"></i>
+                </div>
+              </div>
+              <div class="form-group form-md-line-input  form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0;">
+                <%= f.password_field :current_password, class: "form-control" %>
+                <%= f.label :current_password %>
+              </div>
+              <i>(we need your current password to confirm your changes)</i><br />
+              <div class="row" style="padding-right:0">
+                <%= f.submit 'Confirm Edit', class: "btn btn-dark btn-submit", style: "margin-bottom:0; width:100%;padding:10px"%>
+                  <!-- <button type="button" class="btn btn-dark btn-submit disabled" style="margin-bottom:0; width: 100%; text-align:center; padding:10px;">Confirm Edit</button> -->
+              </div>
+
+
+            <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="top-content">
+  <div class="container" style="background: #a3cbdb; min-height:95vh; padding-top:90px;">
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box" style="padding:25px; background: white; ">
+        <p style="color: red; margin-top:0; margin-bottom:0; font-family: 'Lato'; font-size: 50px; font-weight: 200 !important; text-align:center; text-transform: uppercase;">Checkout</p>
+        <div class="f1-steps" style="margin-top:0">
+          <div class="f1-progress">
+              <div class="f1-progress-line" data-now-value="100" data-number-of-steps="1" style="width: 100%;"></div>
+          </div>
+          <div class="f1-step active" style="width:100%">
+            <div class="f1-step-icon"><i class="fa fa-usd"></i></div>
+          </div>
+        </div>
+        <p class="text-center" style="color:gray; font-size:12px; padding:15px">
+          <% if current_user.expiration.nil? %>
+            Thanks for joining us at South Carolina Christian Chamber of Commerce! Please submit a payment below using our secure Stripe checkout.
+          <% elsif current_user.expiration < Time.now %>
+            Your membership has expired. Please make a payment to access your account.
+          <% else %>
+            You can renew your membership early from this page. After submitting a payment below, a year will be added to your account expiration date.
+            <p class="text-center" style="color:gray; font-size:12px; padding:15px">
+              <b>New Account Exp. Date:</b> <%= (current_user.expiration + 365.days).strftime("%m/%d/%Y") %>
+            </p>
+          <% end %>
+        </p>
+        <div class="row text-center">
+        <%= form_tag payments_path, method: :post %>
+          <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-amount="<%= @amount %>"
+            data-name="SC Christian Chamber of Commerce"
+            data-email="<%= current_user.email %>"
+            data-description="Annual membership"
+            data-image="https://s3.amazonaws.com/sc-c3/sc-c3-logo-square.png"
+            data-locale="auto"
+            data-zip-code="true">
+          </script>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

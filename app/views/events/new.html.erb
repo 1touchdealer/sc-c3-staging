@@ -1,0 +1,182 @@
+<div class="top-content">
+  <div class="container" style="background: #a3cbdb; width:100%; min-height:100vh; padding-top:90px;">
+    <p class="step-form-title">Submit Event</p>
+      <div class="row">
+          <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box" style="padding-bottom: 50px">
+            <%= form_for(@event, url: {action: "create"}, html: {class: "f1"}) do |f| %>
+          		<div class="f1-steps">
+          			<div class="f1-progress">
+          			    <div class="f1-progress-line" data-now-value="20" data-number-of-steps="3" style="width: 20%;"></div>
+          			</div>
+          			<div class="f1-step active" style="width:33.3%">
+          				<div class="f1-step-icon"><i class="fa fa-address-card"></i></div>
+          				<p style="margin-top:8px">Event Info</p>
+          			</div>
+          			<div class="f1-step" style="width:33.3%">
+          				<div class="f1-step-icon"><i class="fa fa-newspaper-o"></i></div>
+          				<p style="margin-top:8px">Footprint</p>
+          			</div>
+          		    <!-- <div class="f1-step">
+          				<div class="f1-step-icon"><i class="fa fa-cogs"></i></div>
+          				<p style="margin-top:8px">Specifics</p>
+          			</div> -->
+                <div class="f1-step" style="width:33.3%">
+                <div class="f1-step-icon"><i class="fa fa-calendar-check-o"></i></div>
+                <p style="margin-top:8px">Confirm</p>
+              </div>
+          		</div>
+<!-- =========================================== FIRST STEP ============================================= -->
+          		<fieldset>
+                  <div class="form-group form-md-line-input form-md-floating-label">
+                    <div class="input-icon right">
+                      <%= f.text_field :name, class: 'form-control', required: true %>
+                      <%= f.label :name %>
+                      <i class="fa fa-id-card-o"></i>
+                    </div>
+                  </div>
+                  <div class="form-group form-md-line-input form-md-floating-label" style="margin-top: 15px;padding-top: 15px !important;margin-bottom: 20px !important;">
+                    <%= f.text_area :description, class: 'form-control', rows: 3 %>
+                    <%= f.label :description %>
+                  </div>
+                  <div class="row">
+                    <div class="form-group ">
+                      <div class="col-xs-12 col-md-8 col-md-offset-2" style="text-align:center">
+                        <h4 style="color:#999; margin-top: 0;">Event Image Upload</h4>
+                          <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                                <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+                            </div>
+                            <div>
+                              <span class="btn red btn-outline btn-file">
+                                  <span class="fileinput-new"> Select image </span>
+                                  <span class="fileinput-exists"> Change </span>
+                                  <%= f.file_field :image %>
+                                  <input name="gym[image]" id="gym_image" type="file">
+                                </span>
+                              <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                            </div>
+                          </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="f1-buttons">
+                      <button type="button" class="btn btn-dark btn-next step-form-btn">Next</button>
+                    </div>
+                  </fieldset>
+<!-- =========================================== SECOND STEP ============================================= -->
+                  <fieldset>
+                    <h4>How Long Is Your Event?</h4>
+                    <!-- =========================================== Multi Day Event Body =============================================== -->
+                    <div class="form-group row" style="padding-left:12px; padding-right:12px;">
+                        <label class="control-label col-xs-12" style=" font-size: 14px;color: #888; font-weight:bold;">Date & Time Range</label>
+                        <div class="col-xs-12" style="padding-bottom: 10px;">
+                            <div class="input-group date-picker input-daterange" data-date="10/11/2012">
+                                <%= f.hidden_field :start %>
+                                <input type="text" class="form-control datetime-picker" id="event_start_picker" />
+                                <span class="input-group-addon"> to </span>
+                                <%= f.hidden_field :end %>
+                                <input type="text" class="form-control datetime-picker" id="event_end_picker" />
+                                <!-- <input  id='single-day-start-datetime' class="form-control form-control-inline datetime-picker" size="16" value="" type="text"> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- =========================================== End Multi Day Event Body ============================================= -->
+                    <hr />
+                    <h4>Region For Your Event?</h4>
+                    <div class="form-group row form-md-line-input dropdown-input-field" style="padding-left:12px; padding-right:12px;">
+                      <%= f.collection_select :region_id, Region.order(:name), :id, :name, {prompt: true}, {class: 'form-control select-church-region', style: 'margin-top: 10px;', required: true} %>
+                      <%= f.label :region, for: :region_id, style: "padding-left:12px;" %>
+                    </div>
+                    <hr />
+                    <h4>Add Registration Link?</h4>
+                    <div class="form-group row" style="padding-left:27px; padding-right:27px;">
+                      <label style=" font-size: 14px;color: #888; font-weight:bold;">Registration URL</label>
+                      <%= f.url_field :registration_url, class: 'form-control', placeholder: "http://www.address.com" %>
+                    </div>
+
+                    <div class="f1-buttons">
+                      <div class="col-sm-4 col-xs-6" style="padding-left:0">
+                          <button type="button" class="btn btn-dark btn-previous step-form-btn">Previous</button>
+                      </div>
+                      <div class="col-sm-4 col-sm-offset-4 col-xs-6" style="padding-right:0">
+                          <button id="last-next-btn" type="button" class="btn btn-dark btn-next step-form-btn">Next</button>
+                      </div>
+                    </div>
+                  </fieldset>
+<!-- =========================================== THIRD STEP ============================================= -->
+                  <fieldset>
+                    <h2 class="text-center" style="font-size: 30px;">Confirm Event Submission</h2>
+                    <p class="text-center" style="color:gray; font-size:12px; padding:0 15px;">
+                      Thanks for submitting an event to our calendar. Please allow 24hrs for your request to be processed.
+                    </p>
+                    <hr />
+                    <div class="form-group form-md-line-input step-form-confirmation-form" style="padding-top: 18px !important;">
+                        <div id="name_confirmation" class="form-control form-control-static">...</div>
+                        <label for="form_control_1">Event Name</label>
+                    </div>
+                    <div class="row step-form-confirmation-form" style="padding-left:0;">
+                      <label for="form_control_1">Event Description</label>
+                        <p id="description_confirmation"style="padding-left:15px">
+                        </p>
+                    </div>
+                    <!-- <div class="form-group form-md-line-input step-form-confirmation-form" style="padding-top: 18px !important;">
+                        <div id="region_confirmation" class="form-control form-control-static">...</div>
+                        <label for="form_control_1">Region</label>
+                    </div> -->
+                    <div class="form-group form-md-line-input step-form-confirmation-form" style="padding-top: 18px !important;">
+                      <div id="start_confirmation" class="form-control form-control-static">...</div>
+                        <label for="form_control_1">Start Date/Time</label>
+                    </div>
+                    <div class="form-group form-md-line-input step-form-confirmation-form" style="padding-top: 18px !important;">
+                      <div id="end_confirmation" class="form-control form-control-static">...</div>
+                        <label for="form_control_1">End Date/Time</label>
+                    </div>
+                    <div class="form-group form-md-line-input step-form-confirmation-form" style="padding-top: 18px !important;">
+                        <div id="registration_url_confirmation" class="form-control form-control-static">...</div>
+                        <label for="form_control_1">Registration Link</label>
+                    </div>
+                    <hr />
+                    <div class="f1-buttons">
+                      <div class="col-sm-4 col-xs-6" style="padding-left:0">
+                          <button type="button" class="btn btn-dark btn-previous step-form-btn">Previous</button>
+                      </div>
+                      <div class="col-sm-4 col-sm-offset-4 col-xs-6" style="padding-right:0">
+                          <%= f.submit 'Submit', class: "btn btn-dark btn-submit step-form-btn" %>
+                      </div>
+                    </div>
+                  </fieldset>
+
+          	<% end %>
+          </div>
+      </div>
+
+  </div>
+</div>
+
+<%= javascript_tag do %>
+window.onload = function() {
+  $( "#last-next-btn" ).click(function() {
+    $('#name_confirmation').html( $('#event_name').val());
+    $('#description_confirmation').html( $('#event_description').val() );
+    $('#region_confirmation').html( $('#event_region_id').val())  ;
+    $('#start_confirmation').html( $('#event_start_picker').val());
+    $('#end_confirmation').html( $('#event_end_picker').val());
+    $('#registration_url_confirmation').html( $('#event_registration_url').val());
+
+  });
+
+  var format = 'L LT';
+
+  $('#event_start_picker').datetimepicker({format: format});
+  $('#event_end_picker').datetimepicker({format: format});
+
+  $("#event_start_picker").on("dp.change", function (e) {
+    $('#event_end_picker').data("DateTimePicker").minDate(e.date);
+    $('#event_start').val(e.date.toISOString());
+  });
+
+  $("#event_end_picker").on("dp.change", function (e) {
+    $('#event_end').val(e.date.toISOString());
+  });
+};
+<% end %>

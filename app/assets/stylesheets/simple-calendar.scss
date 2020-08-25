@@ -1,0 +1,161 @@
+
+.simple-calendar {
+  .table{
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .table > thead {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .table > tbody > tr > td{
+    border: none;
+    border-radius: 50%;
+    // height: 10px;
+    // line-height: 40px;
+    text-align: center;
+    width: 14.2%;
+    position: relative;
+  }
+
+  .table > thead > tr > th {
+    text-align: center;
+  }
+
+  .has-events::after{
+    // background: #00addf;
+    background: red;
+    border-radius: 50%;
+
+    content: '';
+    height: .8em;
+    margin: 0em 0 0 -.25em;
+    position: absolute;
+    width: .8em;
+  }
+  .day {
+    font-size:12px;
+  }
+
+  .wday-0 {
+  }
+  .wday-1 {}
+  .wday-2 {}
+  .wday-3 {}
+  .wday-4 {}
+  .wday-5 {}
+  .wday-6 {}
+
+  .today {
+    // border-radius: 50%;
+    display: block;
+    width: 30px !important;
+    line-height: 12px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    background-color: #061626;
+    color: white;
+    margin:0 auto;
+  }
+  .past {
+  }
+  .future {}
+
+  .start-date {}
+
+  .prev-month {
+    color: #d7d7d7;
+  }
+  .next-month {
+    color: #d7d7d7;
+  }
+  .current-month {
+
+  }
+
+  .has-events {}
+
+  .calendar-heading{
+    text-align: center;
+    padding-top:4vh;
+    padding-bottom: 4vh;
+
+    a{
+      color: red;
+    }
+    span.calendar-title{
+      font-family: 'Lato';
+      font-size: 24px;
+      font-weight: 300;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
+}
+
+
+#divDropup{
+  width: 100%;
+}
+#divDropup button{
+  width: 100%;
+  background-color: #212121!important;
+  color: #fff!important;
+}
+
+#divDropup button:hover{
+  background-color: transparent !important;
+  border: 2px solid #EA4B4F !important;
+  color: #EA4B4F !important;
+}
+
+#divDropup ul{
+  width: 100%;
+  background-color: #212121!important;
+  color: #fff!important;
+  text-align: center;
+}
+
+.btn-calendar-control{
+  background:white;
+  color:black;
+}
+
+.btn-hover-red{
+  font-family: Lato;
+  text-transform: uppercase;
+}
+
+.btn-hover-red:hover{
+  background-color: transparent !important;
+  border: 2px solid #EA4B4F !important;
+  color: #EA4B4F !important;
+}
+
+.events-btn{
+  width: 310px;
+  margin: 0 auto;
+}
+.events-btn #divDropup{
+  display: inline-block;
+  float: left;
+  width: 150px;
+  margin-right: 5px;
+}
+.events-btn a.btn-calendar-control{
+  float: left;
+  display: inline-block;
+  width: 150px !important;
+  margin-top: 0;
+  margin-left: 5px;
+}
+.events-btn .dropdown-menu{
+  position: inherit;
+}
+.events-btn .btn{
+  border: 2px solid #212121;
+}

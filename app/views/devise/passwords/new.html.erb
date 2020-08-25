@@ -1,0 +1,26 @@
+<div class="row" style="background: #a3cbdb; margin: 0 auto; min-height: 100vh;">
+  <div class="portlet light " id="form_wizard_1" style="width: 80%; margin: 0 auto; margin-top: 95px; border: 1px solid black; margin-bottom: 20px; background: rgba(256,256,256,.85);border-radius: 5px !important;">
+      <div class="portlet-body form">
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+        <%= f.hidden_field :reset_password_token %>
+          <div class="form-body" style="padding-top:0">
+            <div class="row" style="margin-left: 15px; margin-right: 15px;">
+              <div class="col-sm-12" style="padding:10px">
+                  <h2 class="text-center" style="font-family: 'Lato'; font-size: 38px; font-weight: 300;">Forgot Your Password? </h2>
+                  <div class="form-group form-md-line-input form-md-floating-label" style="padding-bottom: 0px; margin-bottom:0; padding-top: 32px;">
+                    <div class="input-icon right">
+                      <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+                      <%= f.label :email, for: 'form_control_1' %>
+                      <i class="fa fa-envelope-o"></i>
+                    </div>
+                  </div>
+                  <div class="row" style="text-align:center; margin:0;">
+                    <%= f.submit 'Email Me Instructions', class: "btn btn-dark btn-submit", style: "margin-bottom:0; width: 100%; text-align:center; padding:10px;" %>
+                  </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>

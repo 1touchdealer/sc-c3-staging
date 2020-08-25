@@ -1,0 +1,240 @@
+<div class="top-content">
+  <div class="container" style="background: #a3cbdb; width:100%; min-height:100vh; padding-top:100px ">
+    <p class="registration-title">Individual</p>
+    <p class="registration-title-secondary"><%= user_signed_in? ? 'edit' : 'registration' %></p>
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box" style="padding-bottom: 50px">
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'f1'}) do |f| %>
+          <div class="f1-steps">
+            <div class="f1-progress">
+              <div class="f1-progress-line" data-now-value="<%= user_signed_in? ? 12 : 61 %>" data-number-of-steps="4" style="width: 12%;"></div>
+            </div>
+            <div class="f1-step active">
+              <div class="f1-step-icon"><i class="fa fa-user"></i></div>
+              <p style="margin-top:8px">Your Info</p>
+            </div>
+            <div class="f1-step">
+              <div class="f1-step-icon"><i class="fa fa-globe"></i></div>
+              <p style="margin-top:8px">Region</p>
+            </div>
+            <div class="f1-step">
+              <div class="f1-step-icon"><i class="fa fa-cogs"></i></div>
+              <p style="margin-top:8px">Associate</p>
+            </div>
+            <div class="f1-step">
+              <div class="f1-step-icon"><i class="fa fa-check"></i></div>
+              <p style="margin-top:8px">Confirm</p>
+            </div>
+          </div>
+
+          <fieldset>
+            <div class="form-group form-md-line-input form-md-floating-label">
+              <div class="input-icon right">
+                <%= f.text_field :name, class: "form-control", required: true %>
+                <%= f.label :name %>
+                <span class="help-block">Your name. ex: John Smith</span>
+                <i class="fa fa-user"></i>
+              </div>
+            </div>
+            <div class="form-group form-md-line-input form-md-floating-label">
+              <div class="input-icon right">
+                <%= f.email_field :email, class: "form-control", email: true, required: true, readonly: (user_signed_in? ? true : false) %>
+                <%= f.label :email %>
+                <span class="help-block" >Email for login...</span>
+                <i class="fa fa-envelope-o"></i>
+              </div>
+              <% if resource.errors.include? :email %>
+                <span style="color: #a94442"><%= resource.errors[:email].join(', ') %></span>
+              <% end %>
+            </div>
+            <div class="form-group form-md-line-input form-md-floating-label">
+              <div class="input-icon right">
+                <%= f.password_field :password, class: "form-control", minlength: 6, required: (user_signed_in? ? false : true) %>
+                <%= f.label :password %>
+                <span class="help-block">Must be at least 6 characters</span>
+                <i class="fa fa-unlock-alt"></i>
+              </div>
+            </div>
+            <div class="form-group form-md-line-input form-md-floating-label">
+              <div class="input-icon right">
+                <%= f.password_field :password_confirmation, class: "form-control", equalTo: '#user_password' %>
+                <%= f.label :password_confirmation %>
+                <i class="fa fa-lock"></i>
+              </div>
+            </div>
+            <div class="f1-buttons">
+              <button type="button" class="btn btn-dark btn-next" style="width: 100%; margin-bottom:0">Next</button>
+            </div>
+          </fieldset>
+
+          <% if user_signed_in? %>
+            <fieldset>
+              <div class="form-group form-md-line-input">
+<!--                 <label class="" style="color: #888; font-size:13px">Address</label>
+ -->                <!-- <input class="form-control autocomplete-address" placeholder="Start Typing..." type="text" required> -->
+                <label class="" style="color: #888; font-size:13px">Address Line1</label>
+                <span class="red-color">*</span>
+                <%= f.text_field :address_line1, class: "address_line1 form-control" %>
+                <div id="address_line1" class="error" ></div>
+              </div>
+
+              <div class="form-group form-md-line-input">
+                <label class="" style="color: #888; font-size:13px">Address Line2</label>
+                  <%= f.text_field :address_line2, class: "address_line2 form-control" %>
+                <div id="address_line2" class="error" ></div>
+              </div>
+
+               <div class="form-group form-md-line-input">
+                <label class="" style="color: #888; font-size:13px">City</label>
+                <span class="red-color">*</span>
+                <%= f.text_field :address_city, class: "address_city form-control" %>
+                <div id="city" class="error" ></div>
+              </div>
+
+               <div class="form-group form-md-line-input">
+                <label class="" style="color: #888; font-size:13px">State</label>
+                <span class="red-color">*</span>
+                <%= f.select :address_state, CS.states(:us).map{|a| [a[1], a[0]]}, {prompt: true}, {class: 'address_state form-control', style: 'margin-top: 10px;', required: true} %>
+                <%#= f.text_field :address_state, class: "address_state form-control" %>
+                <div id="state" class="error" ></div>
+              </div>
+
+               <div class="form-group form-md-line-input">
+                <label class="" style="color: #888; font-size:13px">Zip code</label>
+                <span class="red-color">*</span>
+                <%= f.text_field :address_zip, class: "address_zip form-control" %>
+                <div id="zipcode" class="error" ></div>
+              </div>
+
+              <div class="form-group form-md-line-input dropdown-input-field">
+                <%= f.label :region_id, style:"color: #888; font-size:13px" %>
+                <%= f.collection_select :region_id, Region.order(:name), :id, :name, {prompt: true}, {class: 'select-church-category', style: 'margin-top: 10px;', required: true} %>
+              </div>
+
+              <div class="f1-buttons">
+                <div class="col-xs-5 col-sm-4" style="padding-left:0; padding-right:0;">
+                  <button type="button" class="btn btn-dark btn-previous" style="margin-bottom:0; width: 100%; text-align:center; padding:10px;">Previous</button>
+                </div>
+                <div class="col-xs-2 col-sm-4">
+                </div>
+                <div class="col-xs-5 col-sm-4" style="padding-left:0; padding-right:0">
+                  <button type="button" class="btn btn-dark btn-next" id="individual_form" style="margin-bottom:0; width: 100%; text-align:center; padding:10px;">Next</button>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <div class="form-group form-md-line-input dropdown-input-field">
+                <%= f.collection_select :area_of_interest_ids, AreaOfInterest.order(:name), :id, :name, {prompt: true}, {multiple: true, class: 'form-control select-area-of-interest', style: 'margin-top: 10px;'} %>
+                <%= f.label :areas_of_interest, for: :area_of_interest_ids %>
+              </div>
+
+              <div class="form-group form-md-line-input dropdown-input-field">
+                <%= f.collection_select :church_id, Church.approved.order(:name), :id, :name, {prompt: true}, {class: 'form-control select-church', style: 'margin-top: 10px;'} %>
+                <%= f.label :attach_your_church, for: :church_id %>
+              </div>
+
+              <div class="form-group form-md-line-input dropdown-input-field">
+                <%= f.collection_select :business_id, Business.approved.order(:name), :id, :name, {prompt: true}, {class: 'form-control select-employer', style: 'margin-top: 10px;'} %>
+                <%= f.label :attach_your_employer, for: :business_id %>
+              </div>
+
+              <div class="form-group form-md-line-input dropdown-input-field">
+                <%= f.collection_select :alliance_id, Alliance.approved.order(:name), :id, :name, {prompt: true}, {class: 'form-control select-alliance', style: 'margin-top: 10px;'} %>
+                <%= f.label :attach_your_alliance, for: :alliance_id %>
+              </div>
+
+              <div class="f1-buttons">
+                <div class="col-xs-5 col-sm-4" style="padding-left:0; padding-right:0;">
+                  <button type="button" class="btn btn-dark btn-previous" style="margin-bottom:0; width: 100%; text-align:center; padding:10px;">Previous</button>
+                </div>
+                <div class="col-xs-2 col-sm-4">
+                </div>
+                <div class="col-xs-5 col-sm-4" style="padding-left:0; padding-right:0">
+                  <button type="button" class="btn btn-dark btn-next" style="margin-bottom:0; width: 100%; text-align:center; padding:10px;">Next</button>
+                </div>
+              </div>
+            </fieldset>
+          <% end %>
+
+          <fieldset>
+            <div class="row text-center" style="font-family: 'Lato'; font-size: 14px; ">
+              <p class="text-align:center; padding-top:10px;">
+                <%=user_signed_in? ? 'Thanks for completing Registration!' : 'Please read and agree to the terms and agreements, then checkout using our secure Stripe checkout feature to submit your account for approval.'%>
+              </p>
+            </div>
+            <div class="row">
+              <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+                <p class="text-center" style="font-weight: bold">
+                  Annual Membership Fee: $49.00
+                </p>
+                <div class="md-checkbox-inline">
+                  <div class="md-checkbox has-success">
+                    <input name="terms_accepted" id="member-terms-checkbox" class="md-check" type="checkbox" data-toggle="modal"  data-target="#termsModal" data-class="openTermsModal" required <%= user_signed_in? ? :checked : :unchecked %> <%=user_signed_in? ? :disabled : ''%>>
+                    <label for="member-terms-checkbox">
+                      <span></span>
+                      <span class="check"></span>
+                      <span class="box"></span> Terms and Conditions </label>
+                  </div>
+                </div>
+                <div class="md-checkbox-inline">
+                  <div class="md-checkbox has-success">
+                    <input name="covenant_accepted" id="member-covenant-checkbox" class="md-check" type="checkbox" data-toggle="modal"  data-target="#covenantModal" data-class="openCovenantModal" required <%= user_signed_in? ? :checked : :unchecked %> <%=user_signed_in? ? :disabled : ''%> >
+                    <label for="member-covenant-checkbox">
+                      <span></span>
+                      <span class="check"></span>
+                      <span class="box"></span> Convenant Agreement </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row social-share-row" style="margin-top: 30px;">
+              <div class="col-xs-2" style="padding-right:0; padding-top: 10px;font-weight: 700;">
+                Share:
+              </div>
+              <div class="col-xs-10" style="padding-left:0;">
+                <%= social_share_button_tag("Just Signed Up For SC-C3", :url => root_url) %>
+              </div>
+            </div>
+
+            <div class="f1-buttons">
+              <div class="col-xs-5 col-sm-4" style="padding-left:0; padding-right:0">
+                <button type="button" class="btn btn-dark btn-previous" style="margin-bottom:0; width: 100%; text-align:center; padding:10px;">Previous</button>
+              </div>
+              <div class="col-xs-2 col-sm-4">
+              </div>
+              <div class="col-xs-5 col-sm-4" style="padding-left:0; padding-right:0">
+                <button type="submit" class="btn btn-dark btn-submit" style="margin-bottom:0; width: 100%; text-align:center; padding:10px;">Next</button>
+              </div>
+            </div>
+          </fieldset>
+        <% end %>
+      </div>
+    </div>
+    <%= render "devise/registrations/terms_modals/terms_and_agreements" %>
+    <%= render "devise/registrations/terms_modals/individual_covenant" %>
+  </div>
+</div>
+
+
+<style type="text/css">
+.error {
+  color: #ff0000
+}
+.all {
+  color: #ff0000;
+  text-align: center;
+}
+.red-color {
+  color: red;
+}
+</style>
+<script>
+  
+  <% if user_signed_in? %>
+    window.onload = function () {
+      $('.f1 .btn-next').first().click();
+    };
+  <% end %>
+
+</script>

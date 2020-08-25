@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgis
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: sc_christian_chamber_of_commerce_development
+
+test:
+  <<: *default
+  database: sc_christian_chamber_of_commerce_test
+
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'].to_s.gsub(/^postgres/, 'postgis') %>

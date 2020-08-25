@@ -1,0 +1,91 @@
+<div class="col-sm-12 chop">
+  <!-- BEGIN BORDERED TABLE PORTLET-->
+  <div class="portlet light portlet-fit">
+      <div class="portlet-title">
+          <div class="caption">
+              <span class="caption-subject sbold uppercase">Campaign In-Kind Donations Recieved</span>
+          </div>
+      </div>
+      <div class="portlet-body">
+          <div class="table-scrollable table-scrollable-borderless" style="overflow: visible;">
+              <table class="table table-hover table-light">
+                  <thead>
+                      <tr class="uppercase" >
+                          <th> Date </th>
+                          <th> Donated By </th>
+                          <th> Campaign </th>
+                          <th> Item </th>
+                          <th> Status </th>
+                          <th> Action </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <% if @pending_inkind.count == 0 %>
+                      <tr class="text-center">
+                        <td colspan="6" >
+                          <% if @is_owner %>
+                              Sorry you have recieved 0 In-Kind Donations
+                          <% else %>
+                              Sorry <%= @prefix %> has recieved 0 In-Kind Donations
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% else %>
+                      <% @pending_inkind.each do |donation| %>
+                        <tr>
+                          <td><%= distance_of_time_in_words(Time.now, donation.created_at) %></td>
+                          <td><%= donation.user.try(:name) || donation.contact_email  %></td>
+                          <td><%= donation.campaign.name %></td>
+                          <td><%= donation.title %></td>
+                          <td><%= donation.workflow_state %></td>
+                          <td>
+                            <div class="actions" class="text-center">
+                            <div class="btn-group">
+                              <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
+                                  <i class="fa fa-angle-down"></i>
+                              </button>
+                              <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                  <a data-toggle="modal"  data-target="#inkindDonationModal<%=donation.id%>" data-class="openInkindDonationModal"/>
+                                  <i class="fa fa-eye" aria-hidden="true"></i> View </a>
+                                </li>
+                                <% if donation.open? %>
+                                  <li>
+                                      <%= link_to accept_resource_path(donation) do %>
+                                          <i class="fa fa-check"></i> Accept
+                                      <% end %>
+                                  </li>
+                                <% end %>
+                              </ul>
+                          </div>
+                        </div>
+                      </td>
+                        </tr>
+
+                        <div id="inkindDonationModal<%=donation.id%>" class="modal fade" role="dialog">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-body" style="text-align:center; padding:0; height:500px">
+                                <h1><%= donation.title %></h1>
+                                <div class="row text-center" style="margin:25px 0">
+                                  <%= image_tag(donation.image.try(&:url) || "http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image", style: "max-width:100%") %>
+                                </div>
+                                <p>
+                                  <%= donation.description %>
+                                </p>
+                              </div>
+                              <div class="modal-footer" style="border:none; padding:0">
+                                <button type="button" class="btn btn-dark" style="width:100%; margin:0;" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+  <!-- END BORDERED TABLE PORTLET-->
+</div>

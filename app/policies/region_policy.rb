@@ -1,0 +1,2 @@
+class RegionPolicy < ApplicationPolicy
+end

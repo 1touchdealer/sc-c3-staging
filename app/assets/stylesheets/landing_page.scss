@@ -1,0 +1,343 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "fontello";
+@import "font-awesome";
+@import "simple-line-icons";
+@import "fancybox/jquery.fancybox";
+@import "buttons";
+@import "styles";
+@import "media-queries";
+@import "navbar";
+@import "simple-calendar";
+@import "social-share-button";
+@import "footer";
+@import "tool_boxes";
+
+#menu-toggle{
+  margin-right: 10px;
+}
+
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.modal-title{
+  font-family: Lato;
+  font-weight: 300;
+  font-size: 2em;
+}
+
+.modal-info{
+  font-family: Lato;
+  padding-top:20px;
+}
+
+.landing-page-campaign-image{
+  height: 240px;
+  object-fit: contain;
+}
+
+.landing-page-campaign-content{
+  height:125px;
+  overflow: hidden;
+  padding-top:0 !important;
+}
+.landing-page-campaign-footer{
+  font-size: .8em;
+}
+
+
+.icon-clock:before{
+  content: '\e870';
+}
+.icon-eye:before{
+  content: '\e815';
+}
+
+// -------------------------------------------
+.container-fluid{
+  padding-right:0;
+}
+.container .show-container{
+  height: 80%;
+  width: 95%;
+  padding-top: 70px;
+}
+.show-title{
+  padding-top:60px ;
+  font-size:70px;
+  font-weight: 300;
+}
+.show-section{
+  background: white;
+  padding:0;
+  border-radius: 5px;
+  margin-bottom: 4vh;
+  padding-bottom:10px;
+}
+
+// ------------- Campaign Show -----------------
+#campaign-show {
+
+  .panel-title > a{
+    border: none;
+    border-bottom: 1px solid #e4e4e4;
+    text-decoration: none;
+    font-size: 12px;
+  }
+  .row{
+    margin-left:0;
+    margin-right:0;
+  }
+}
+
+// -------------- Campaign Index ------------------
+#campaign-index {
+  .donation-item{
+    margin: 0 auto 30px;
+  }
+}
+
+#business-index {
+  .donation-item{
+    margin: 0 auto 30px;
+  }
+}
+
+#alliance-index {
+  .donation-item{
+    margin: 0 auto 30px;
+  }
+}
+
+#church-index {
+  .donation-item{
+    margin: 0 auto 30px;
+  }
+}
+
+//--------------- Member Section ------------------
+.member-link-text{
+  border: 1px solid #ccc;
+  text-align:center;
+  border-radius: 0 0 8px 8px;
+  padding: 5px;
+  font-size: 1em;
+  font-family: 'Lato';
+  font-weight: 400;
+
+  span{
+    font-weight: 400;
+  }
+}
+
+.member-container{
+   transition: all .2s ease-in-out;
+}
+.member-container:focus{
+  text-decoration: none !important;
+  outline: 0 !important;
+}
+.member-container:hover{
+  transform: scale(1.1);
+}
+
+
+
+
+
+// ------------- Events Show -----------------
+.event-show .date {
+    border: 6px solid rgb(38, 52, 75);
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    color: #fff;
+    display: block;
+    font-size: 1em;
+    left: 13px;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    top: 13px;
+}
+
+.event-show .date span {
+    background-color: #395178;
+    display: block;
+    height: 50px;
+    padding: 8px 0 0 0;
+    width: 50px;
+}
+
+.event-show .date span em {
+    display: block;
+    font-size: 0.7em;
+    font-style: normal;
+    line-height: 0.7em;
+}
+
+.event-show img{
+  margin-top:15px;
+}
+
+#event-show h5{
+  font-size: .7em;
+  color: gray;
+}
+
+#event-show p{
+  font-size: .8em;
+}
+
+#event-show{
+  .row{
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+#business-show{
+  .row{
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .social i{
+    font-size: 1.6em;
+  }
+
+  .icon-plus:before{
+    content: '\e824';
+  }
+}
+
+
+// ------------- Social Share Button Bar -----------------
+.social-share-row{
+  border-bottom: 1px solid #e4e4e4;
+  border-top: 1px solid #e4e4e4;
+  line-height: 16px;
+  margin: 0;
+  padding: 15px 0 0 0;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 10px;
+  font-size:.8em;
+  min-height:63px;
+
+
+  a:hover {
+    background-color: #55b8a4;
+    border-color: #55b8a4;
+    color: #fff;
+  }
+}
+
+.social-share-button {
+  .ssb-icon {
+    background-image:none;
+    background: #66808c;
+  border: 1px solid #e4e4e4;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  color: white;
+  display: block;
+  float: right;
+  font-size: 1.2em;
+  height: 45px;
+  line-height: 43px;
+  margin: -7px 7px 0;
+  text-align: center;
+  width: 45px;
+  position: relative;
+  margin-bottom:10px;
+  }
+  .ssb-icon:before{
+    display: inline-block;
+    text-decoration: inherit;
+    text-align: center;
+    opacity: .8;
+    font-variant: normal;
+    text-transform: none;
+    position:relative;
+    font-family: 'fontello';
+  }
+
+ .ssb-pinterest:before{
+   content: '\e8f5';
+ }
+ .ssb-facebook:before{
+   content: '\e8e6';
+ }
+ .ssb-twitter:before{
+   content: '\e8e0';
+ }
+ .ssb-linkedin:before{
+   content: '\e901';
+ }
+ .ssb-google_plus:before{
+   content: '\e8ef';
+ }
+
+}
+
+//-------------------------- Caoursel -----------------------------
+.carousel-control.left{
+  background:none;
+}
+
+.carousel-control.right{
+  background:none;
+}
+
+//-------------------------- Invite -----------------------------
+#mailer_div .modal-dialog {
+  width: 500px;
+}
+#modal-form .form-control {
+  padding: 5px;
+  border-radius: 4px;
+}
+#modal-form .form-group {
+  clear: both;
+  display: inline-block;
+  margin-bottom: 15px;
+  width: 100%;
+}
+#modal-form label {
+  padding-top: 8px;
+}
+.btn-bx .btn {
+  margin-right: 10px;
+}
+.modal-header h5 {
+  color: #666;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 600;
+}
+.error {
+  color: #ff0000
+}
+.all {
+  color: #ff0000;
+  text-align: center;
+}
+.red-color {
+  color: red;
+}
